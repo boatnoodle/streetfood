@@ -1,9 +1,37 @@
 import React, { useEffect } from "react";
 import Button from "@material-ui/core/Button";
+import FormGroup from "@material-ui/core/FormGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox, { CheckboxProps } from "@material-ui/core/Checkbox";
+import TextField from "@material-ui/core/TextField";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import Grid, { GridSpacing } from "@material-ui/core/Grid";
+import Chip from "@material-ui/core/Chip";
+import Badge from "@material-ui/core/Badge";
 
 import { useFirebase } from "components/Firebase/useFirebase";
 
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      margin: "20px 0",
+      "& .MuiTextField-root": {
+        margin: theme.spacing(1),
+        width: "25ch"
+      },
+      flexGrow: 1
+    },
+    control: {
+      padding: theme.spacing(2)
+    },
+    "#outlined-basic": {
+      margin: "0"
+    }
+  })
+);
+
 const OrderPage: React.FC = () => {
+  const classes = useStyles();
   const firebase = useFirebase();
 
   const addData = () => {
@@ -32,17 +60,345 @@ const OrderPage: React.FC = () => {
     });
   };
 
+  const handleChange = value => {
+    console.log("change");
+  };
+
   useEffect(() => {
     listenOrders();
   }, []);
 
   return (
-    <div>
-      Order page{" "}
-      <Button onClick={addData} variant="contained" color="primary">
-        Primary
-      </Button>
-    </div>
+    <form className={classes.root} noValidate autoComplete="off">
+      <FormGroup row>
+        <Grid container>
+          <Grid xs>
+            <TextField id="outlined-basic" label="ชื่อผู้สั่ง(Optional)" />
+          </Grid>
+          <Grid xs style={{ textAlign: "right" }}>
+            <Chip label="คิวที่ 1" color="secondary" />
+          </Grid>
+        </Grid>
+      </FormGroup>
+      <FormGroup row>
+        <FormControlLabel
+          control={
+            <Checkbox checked={true} onChange={handleChange} name="checkedA" />
+          }
+          label="ร้านโกเอ"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              // checked={}
+              onChange={handleChange}
+              name="checkedA"
+            />
+          }
+          label="FOOD PANDA"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              // checked={}
+              onChange={handleChange}
+              name="checkedA"
+            />
+          }
+          label="GRAB"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              // checked={}
+              onChange={handleChange}
+              name="checkedA"
+            />
+          }
+          label="LINE MAN"
+        />
+      </FormGroup>
+      <hr />
+      <FormGroup row>
+        <Grid container spacing={2}>
+          <Grid item>
+            <Chip label="เมนูก๋วยเตี๋ยว" />
+          </Grid>
+        </Grid>
+        <Grid container spacing={2}>
+          <Grid item xs>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  // checked={}
+                  onChange={handleChange}
+                  name="checkedA"
+                />
+              }
+              label="เรือ"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  // checked={}
+                  onChange={handleChange}
+                  name="checkedA"
+                />
+              }
+              label="น้ำตก"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  // checked={}
+                  onChange={handleChange}
+                  name="checkedA"
+                />
+              }
+              label="ต้มยำหมูสับ"
+            />
+          </Grid>
+          <Grid item xs>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  // checked={}
+                  onChange={handleChange}
+                  name="checkedA"
+                />
+              }
+              label="หมี่ขาว"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  // checked={}
+                  onChange={handleChange}
+                  name="checkedA"
+                />
+              }
+              label="เล็ก"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  // checked={}
+                  onChange={handleChange}
+                  name="checkedA"
+                />
+              }
+              label="ใหญ่"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  // checked={}
+                  onChange={handleChange}
+                  name="checkedA"
+                />
+              }
+              label="บะหมี่"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  // checked={}
+                  onChange={handleChange}
+                  name="checkedA"
+                />
+              }
+              label="วุ้นเส้น"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  // checked={}
+                  onChange={handleChange}
+                  name="checkedA"
+                />
+              }
+              label="มาม่า"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  // checked={}
+                  onChange={handleChange}
+                  name="checkedA"
+                />
+              }
+              label="เกาเหลา"
+            />
+          </Grid>
+          <Grid item xs>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  // checked={}
+                  onChange={handleChange}
+                  name="checkedA"
+                />
+              }
+              label="หมู"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  // checked={}
+                  onChange={handleChange}
+                  name="checkedA"
+                />
+              }
+              label="ลูกชิ้นหมู"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  // checked={}
+                  onChange={handleChange}
+                  name="checkedA"
+                />
+              }
+              label="หมูสด"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  // checked={}
+                  onChange={handleChange}
+                  name="checkedA"
+                />
+              }
+              label="หมูเปื่อย(ตุ๋น)"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  // checked={}
+                  onChange={handleChange}
+                  name="checkedA"
+                />
+              }
+              label="ตับ"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  // checked={}
+                  onChange={handleChange}
+                  name="checkedA"
+                />
+              }
+              label="หัวใจ"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  // checked={}
+                  onChange={handleChange}
+                  name="checkedA"
+                />
+              }
+              label="ม้ามหมู"
+            />
+          </Grid>
+          <Grid item xs>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  // checked={}
+                  onChange={handleChange}
+                  name="checkedA"
+                />
+              }
+              label="เนื้อ"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  // checked={}
+                  onChange={handleChange}
+                  name="checkedA"
+                />
+              }
+              label="ลูกชิ้นเนื้อ"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  // checked={}
+                  onChange={handleChange}
+                  name="checkedA"
+                />
+              }
+              label="เนื้อสด"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  // checked={}
+                  onChange={handleChange}
+                  name="checkedA"
+                />
+              }
+              label="เนื้อเปื่อย(ตุ๋น)"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  // checked={}
+                  onChange={handleChange}
+                  name="checkedA"
+                />
+              }
+              label="ตับ"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  // checked={}
+                  onChange={handleChange}
+                  name="checkedA"
+                />
+              }
+              label="ผ้าขี้ริ้ว"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  // checked={}
+                  onChange={handleChange}
+                  name="checkedA"
+                />
+              }
+              label="ม้ามเนื้อ"
+            />
+          </Grid>
+        </Grid>
+      </FormGroup>
+      <FormGroup>
+        <FormControlLabel
+          control={
+            <Checkbox
+              // checked={}
+              onChange={handleChange}
+              name="checkedA"
+            />
+          }
+          label="ธรรมดา 40 Panda (50)"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              // checked={}
+              onChange={handleChange}
+              name="checkedA"
+            />
+          }
+          label="พิเศษ 50 Panda (60)"
+        />
+      </FormGroup>
+    </form>
   );
 };
 
