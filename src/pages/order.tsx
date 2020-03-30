@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "@material-ui/core/Button";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -8,6 +8,7 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import Grid, { GridSpacing } from "@material-ui/core/Grid";
 import Chip from "@material-ui/core/Chip";
 import Badge from "@material-ui/core/Badge";
+import { RemarksDialog } from "containers/Order/RemarksDialog";
 
 import { useFirebase } from "components/Firebase/useFirebase";
 
@@ -31,9 +32,15 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const OrderPage: React.FC = () => {
+  const [openDialogRemarks, setOpenDialogRemarks] = useState(false);
   const classes = useStyles();
   const firebase = useFirebase();
 
+  const handleChangeRemarks = e => {
+    const checked = e.currentTarget.checked;
+    if (checked) setOpenDialogRemarks(true);
+    else setOpenDialogRemarks(false);
+  };
   const addData = () => {
     firebase.db
       .collection("orders")
@@ -123,6 +130,12 @@ const OrderPage: React.FC = () => {
         <Grid container spacing={2}>
           <Grid item>
             <Chip label="เมนูก๋วยเตี๋ยว" />
+          </Grid>
+          <Grid item>
+            <Chip label="เมนูข้าว" />
+          </Grid>
+          <Grid item>
+            <Chip label="ลวกจิ้ม" />
           </Grid>
         </Grid>
         <Grid container spacing={2}>
@@ -375,6 +388,22 @@ const OrderPage: React.FC = () => {
             />
           </Grid>
         </Grid>
+      </FormGroup>
+      <FormGroup>
+        <RemarksDialog
+          isOpen={openDialogRemarks}
+          setOpenDialogRemarks={setOpenDialogRemarks}
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              // checked={}
+              onChange={handleChangeRemarks}
+              name="checkedA"
+            />
+          }
+          label="หมายเหตุ"
+        />
       </FormGroup>
       <FormGroup>
         <FormControlLabel
