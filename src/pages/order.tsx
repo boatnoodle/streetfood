@@ -13,8 +13,12 @@ import { useFirebase } from "components/Firebase/useFirebase";
 import IconButton from "@material-ui/core/IconButton";
 import AddRoundedIcon from "@material-ui/icons/AddRounded";
 import RemoveRoundedIcon from "@material-ui/icons/RemoveRounded";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import StarIcon from "@material-ui/icons/Star";
 import {
   typeMenus,
+  typeOrders,
   noodles,
   presetRemarks,
   providers,
@@ -26,6 +30,7 @@ import {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
+      position: "relative",
       margin: "20px 0",
       "& .MuiTextField-root": {
         margin: theme.spacing(1),
@@ -41,6 +46,39 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     topSpace: {
       marginTop: "20px"
+    },
+    queueNumber: {
+      position: "absolute",
+      top: "0",
+      right: "0"
+    },
+    colorPrimary: {
+      color: "#3f51b5"
+    },
+    colorSecondary: {
+      color: "#f50057"
+    },
+    textRemark: {
+      color: "red"
+    },
+    btnAddTopping: {
+      width: "30px",
+      height: "30px",
+      background: "#3f51b5",
+      padding: "0",
+      color: "white",
+      marginRight: "10px"
+    },
+    btnDeleteTopping: {
+      width: "30px",
+      height: "30px",
+      background: "#c51162",
+      padding: "0",
+      color: "white"
+    },
+    textToppingMore: {
+      fontSize: "14px",
+      color: "#c51162"
     }
   })
 );
@@ -91,16 +129,9 @@ const OrderPage: React.FC = () => {
 
   return (
     <form className={classes.root} noValidate autoComplete="off">
-      <FormGroup row>
-        <Grid container>
-          <Grid xs>
-            <TextField id="outlined-basic" label="ชื่อผู้สั่ง(Optional)" />
-          </Grid>
-          <Grid xs style={{ textAlign: "right" }}>
-            <Chip label="คิวที่ 1" color="secondary" />
-          </Grid>
-        </Grid>
-      </FormGroup>
+      <div className={classes.queueNumber}>
+        <Chip label="คิวที่ 1" color="secondary" />
+      </div>
       <FormGroup row>
         {providers.map((item, index) => {
           return (
@@ -119,6 +150,7 @@ const OrderPage: React.FC = () => {
         })}
       </FormGroup>
       <hr />
+
       <FormGroup row>
         <Grid container spacing={2}>
           {typeMenus.map((item, index) => {
@@ -129,6 +161,8 @@ const OrderPage: React.FC = () => {
             );
           })}
         </Grid>
+      </FormGroup>
+      <FormGroup row>
         <Grid container spacing={2}>
           <Grid item xs>
             {typeNoodles.map((item, index) => {
@@ -147,78 +181,133 @@ const OrderPage: React.FC = () => {
               );
             })}
           </Grid>
-          <Grid item xs>
+        </Grid>
+      </FormGroup>
+      <hr />
+      <FormGroup row>
+        <Grid container spacing={2}>
+          <Grid item xs={4}>
             {noodles.map((item, index) => {
               return (
-                <FormControlLabel
-                  key={index}
-                  control={
-                    <Checkbox
-                      // checked={}
-                      onChange={handleChange}
-                      name={item.name}
-                    />
-                  }
-                  label={item.name}
-                />
+                <div>
+                  <FormControlLabel
+                    key={index}
+                    control={
+                      <Checkbox
+                        // checked={}
+                        onChange={handleChange}
+                        name={item.name}
+                      />
+                    }
+                    label={item.name}
+                  />
+                </div>
               );
             })}
           </Grid>
-          <Grid item xs>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  // checked={}
-                  onChange={handleChange}
-                  name="checkedA"
-                />
-              }
-              label="หมูรวม"
-            />
+          <Grid xs={4}>
+            <div>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    // checked={}
+                    onChange={handleChange}
+                    name="checkedA"
+                  />
+                }
+                label="หมูรวม"
+              />
+            </div>
             {toppingPork.map((item, index) => {
               return (
-                <FormControlLabel
-                  key={index}
-                  control={
-                    <Checkbox
-                      // checked={}
-                      onChange={handleChange}
-                      name={item.name}
+                <Grid container>
+                  <Grid xs>
+                    <FormControlLabel
+                      key={index}
+                      control={
+                        <Checkbox
+                          // checked={}
+                          onChange={handleChange}
+                          name={item.name}
+                        />
+                      }
+                      label={item.name}
                     />
-                  }
-                  label={item.name}
-                />
+                  </Grid>
+                  <Grid xs={4}>
+                    <button type="button" className={classes.btnAddTopping}>
+                      เพิ่ม
+                    </button>
+                    <button type="button" className={classes.btnDeleteTopping}>
+                      X
+                    </button>
+                  </Grid>
+                </Grid>
               );
             })}
           </Grid>
-          <Grid item xs>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  // checked={}
-                  onChange={handleChange}
-                  name="checkedA"
-                />
-              }
-              label="เนื้อรวม"
-            />
+          <Grid item xs={4}>
+            <div>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    // checked={}
+                    onChange={handleChange}
+                    name="checkedA"
+                  />
+                }
+                label="เนื้อรวม"
+              />
+            </div>
             {toppingBeef.map((item, index) => {
               return (
-                <FormControlLabel
-                  key={index}
-                  control={
-                    <Checkbox
-                      // checked={}
-                      onChange={handleChange}
-                      name={item.name}
-                    />
-                  }
-                  label={item.name}
-                />
+                <Grid container>
+                  <Grid xs>
+                    <Badge color="secondary" overlap="circle" badgeContent={1}>
+                      <FormControlLabel
+                        key={index}
+                        control={
+                          <Checkbox
+                            // checked={}
+                            onChange={handleChange}
+                            name={item.name}
+                          />
+                        }
+                        label={item.name}
+                      />
+                    </Badge>
+                  </Grid>
+                  <Grid>
+                    <button type="button" className={classes.btnAddTopping}>
+                      เพิ่ม
+                    </button>
+                    <button type="button" className={classes.btnDeleteTopping}>
+                      X
+                    </button>
+                  </Grid>
+                </Grid>
               );
             })}
           </Grid>
         </Grid>
+      </FormGroup>
+      <hr />
+      <FormGroup row>
+        {typeOrders.map((item, index) => {
+          return (
+            <FormControlLabel
+              key={index}
+              control={
+                <Checkbox
+                  // checked={true}
+                  onChange={handleChange}
+                  name={item.name}
+                />
+              }
+              label={item.name}
+            />
+          );
+        })}
       </FormGroup>
       <Grid container>
         <Grid xs={8}>
@@ -255,6 +344,7 @@ const OrderPage: React.FC = () => {
               datas={presetRemarks}
             />
             <FormControlLabel
+              className={classes.textRemark}
               control={
                 <Checkbox
                   // checked={}
@@ -266,30 +356,82 @@ const OrderPage: React.FC = () => {
             />
           </FormGroup>
           <FormGroup>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  // checked={}
-                  onChange={handleChange}
-                  name="checkedA"
-                />
-              }
-              label="ธรรมดา 40 Panda (50)"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  // checked={}
-                  onChange={handleChange}
-                  name="checkedA"
-                />
-              }
-              label="พิเศษ 50 Panda (60)"
-            />
+            <RadioGroup
+              aria-label="gender"
+              name="typePrice"
+              value="ธรรมดา"
+              onChange={handleChange}
+            >
+              <Grid container>
+                <Grid xs={7}>
+                  <FormControlLabel
+                    className={classes.colorPrimary}
+                    value="ธรรมดา"
+                    control={
+                      <Radio
+                        checked={true}
+                        onChange={handleChange}
+                        name="checkedA"
+                      />
+                    }
+                    label="ธรรมดา 40 Panda (50)"
+                  />
+                </Grid>
+                <Grid xs>
+                  <Button
+                    size="small"
+                    variant="contained"
+                    className={classes.margin}
+                  >
+                    <AddRoundedIcon />
+                  </Button>
+                  <Button
+                    size="small"
+                    variant="contained"
+                    className={classes.margin}
+                  >
+                    <RemoveRoundedIcon />
+                  </Button>
+                </Grid>
+              </Grid>
+
+              <Grid container>
+                <Grid xs={7}>
+                  <FormControlLabel
+                    className={classes.colorSecondary}
+                    value="พิเศษ"
+                    control={
+                      <Radio
+                        checked={false}
+                        onChange={handleChange}
+                        name="checkedA"
+                      />
+                    }
+                    label="พิเศษ 50 Panda (60)"
+                  />
+                </Grid>
+                <Grid xs>
+                  <Button
+                    size="small"
+                    variant="contained"
+                    className={classes.margin}
+                  >
+                    <AddRoundedIcon />
+                  </Button>
+                  <Button
+                    size="small"
+                    variant="contained"
+                    className={classes.margin}
+                  >
+                    <RemoveRoundedIcon />
+                  </Button>
+                </Grid>
+              </Grid>
+            </RadioGroup>
           </FormGroup>
         </Grid>
         <Grid xs={4}>
-          <FormGroup>
+          <FormGroup className={classes.topSpace}>
             <Button variant="contained" className={classes.margin}>
               ตรวจสอบออเดอร์
             </Button>
@@ -306,6 +448,13 @@ const OrderPage: React.FC = () => {
               className={classes.margin}
             >
               เสร็จสิ้น
+            </Button>
+            <Button
+              variant="outlined"
+              color="secondary"
+              className={classes.margin}
+            >
+              ยกเลิก
             </Button>
           </FormGroup>
         </Grid>
