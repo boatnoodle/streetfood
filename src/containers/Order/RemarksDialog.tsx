@@ -68,7 +68,7 @@ const DialogActions = withStyles((theme: Theme) => ({
   }
 }))(MuiDialogActions);
 
-const RemarksDialog = ({ isOpen = false, setOpenDialogRemarks }) => {
+const RemarksDialog = ({ isOpen = false, setOpenDialogRemarks, datas }) => {
   const handleClose = () => {
     console.log(!isOpen);
     setOpenDialogRemarks(!isOpen);
@@ -85,120 +85,23 @@ const RemarksDialog = ({ isOpen = false, setOpenDialogRemarks }) => {
         </DialogTitle>
         <DialogContent dividers>
           <Grid container spacing={2}>
-            <Grid item xs={6}>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    // checked={}
-                    // onChange={handleChange}
-                    name="checkedA"
+            {datas.map((item, index) => {
+              return (
+                <Grid item xs={4}>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        key={index}
+                        // checked={}
+                        // onChange={handleChange}
+                        name={item.name}
+                      />
+                    }
+                    label={item.name}
                   />
-                }
-                label="ไม่กระเทียม"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    // checked={}
-                    // onChange={handleChange}
-                    name="checkedA"
-                  />
-                }
-                label="ไม่ผัก"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    // checked={}
-                    // onChange={handleChange}
-                    name="checkedA"
-                  />
-                }
-                label="ไม่งอก"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    // checked={}
-                    // onChange={handleChange}
-                    name="checkedA"
-                  />
-                }
-                label="ไม่ผักโรย"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    // checked={}
-                    // onChange={handleChange}
-                    name="checkedA"
-                  />
-                }
-                label="ไม่บุ้ง"
-              />
-            </Grid>
-            <Grid item xs={6}>
-            <FormControlLabel
-                control={
-                  <Checkbox
-                    // checked={}
-                    // onChange={handleChange}
-                    name="checkedA"
-                  />
-                }
-                label="น้ำซุปมาก"
-              />
-            <FormControlLabel
-                control={
-                  <Checkbox
-                    // checked={}
-                    // onChange={handleChange}
-                    name="checkedA"
-                  />
-                }
-                label="น้ำซุปมาก"
-              />
-            <FormControlLabel
-                control={
-                  <Checkbox
-                    // checked={}
-                    // onChange={handleChange}
-                    name="checkedA"
-                  />
-                }
-                label="น้ำซุปมาก"
-              />
-            <FormControlLabel
-                control={
-                  <Checkbox
-                    // checked={}
-                    // onChange={handleChange}
-                    name="checkedA"
-                  />
-                }
-                label="น้ำซุปมาก"
-              />
-            <FormControlLabel
-                control={
-                  <Checkbox
-                    // checked={}
-                    // onChange={handleChange}
-                    name="checkedA"
-                  />
-                }
-                label="น้ำซุปมาก"
-              />
-            <FormControlLabel
-                control={
-                  <Checkbox
-                    // checked={}
-                    // onChange={handleChange}
-                    name="checkedA"
-                  />
-                }
-                label="น้ำซุปมาก"
-              />
-            </Grid>
+                </Grid>
+              );
+            })}
           </Grid>
         </DialogContent>
         <DialogActions>
