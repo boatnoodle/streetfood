@@ -16,6 +16,15 @@ import RemoveRoundedIcon from "@material-ui/icons/RemoveRounded";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import StarIcon from "@material-ui/icons/Star";
+import Provider from "containers/Order/Provider";
+import TypeMenu from "containers/Order/TypeMenu";
+import TypeNoodle from "containers/Order/TypeNoodle";
+import FoodDetail from "containers/Order/FoodDetail";
+import TypeOrder from "containers/Order/TypeOrder";
+import AmountOrder from "containers/Order/AmountOrder";
+import Remark from "containers/Order/Remark";
+import TypePrice from "containers/Order/TypePrice";
+import ActionButton from "containers/Order/ActionButton";
 import {
   typeMenus,
   typeOrders,
@@ -60,25 +69,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     textRemark: {
       color: "red"
-    },
-    btnAddTopping: {
-      width: "30px",
-      height: "30px",
-      background: "#3f51b5",
-      padding: "0",
-      color: "white",
-      marginRight: "10px"
-    },
-    btnDeleteTopping: {
-      width: "30px",
-      height: "30px",
-      background: "#c51162",
-      padding: "0",
-      color: "white"
-    },
-    textToppingMore: {
-      fontSize: "14px",
-      color: "#c51162"
     }
   })
 );
@@ -132,331 +122,33 @@ const OrderPage: React.FC = () => {
       <div className={classes.queueNumber}>
         <Chip label="คิวที่ 1" color="secondary" />
       </div>
-      <FormGroup row>
-        {providers.map((item, index) => {
-          return (
-            <FormControlLabel
-              key={index}
-              control={
-                <Checkbox
-                  checked={true}
-                  onChange={handleChange}
-                  name={item.name}
-                />
-              }
-              label={item.name}
-            />
-          );
-        })}
-      </FormGroup>
+      <Provider providers={providers} handleChange={handleChange} />
       <hr />
+      <TypeMenu typeMenus={typeMenus} />
 
-      <FormGroup row>
-        <Grid container spacing={2}>
-          {typeMenus.map((item, index) => {
-            return (
-              <Grid item key={index}>
-                <Chip label={item.name} />
-              </Grid>
-            );
-          })}
-        </Grid>
-      </FormGroup>
-      <FormGroup row>
-        <Grid container spacing={2}>
-          <Grid item xs>
-            {typeNoodles.map((item, index) => {
-              return (
-                <FormControlLabel
-                  key={index}
-                  control={
-                    <Checkbox
-                      // checked={}
-                      onChange={handleChange}
-                      name={item.name}
-                    />
-                  }
-                  label={item.name}
-                />
-              );
-            })}
-          </Grid>
-        </Grid>
-      </FormGroup>
+      <TypeNoodle typeNoodles={typeNoodles} handleChange={handleChange} />
       <hr />
-      <FormGroup row>
-        <Grid container spacing={2}>
-          <Grid item xs={4}>
-            {noodles.map((item, index) => {
-              return (
-                <div>
-                  <FormControlLabel
-                    key={index}
-                    control={
-                      <Checkbox
-                        // checked={}
-                        onChange={handleChange}
-                        name={item.name}
-                      />
-                    }
-                    label={item.name}
-                  />
-                </div>
-              );
-            })}
-          </Grid>
-          <Grid xs={4}>
-            <div>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    // checked={}
-                    onChange={handleChange}
-                    name="checkedA"
-                  />
-                }
-                label="หมูรวม"
-              />
-            </div>
-            {toppingPork.map((item, index) => {
-              return (
-                <Grid container>
-                  <Grid xs>
-                    <FormControlLabel
-                      key={index}
-                      control={
-                        <Checkbox
-                          // checked={}
-                          onChange={handleChange}
-                          name={item.name}
-                        />
-                      }
-                      label={item.name}
-                    />
-                  </Grid>
-                  <Grid xs={4}>
-                    <button type="button" className={classes.btnAddTopping}>
-                      เพิ่ม
-                    </button>
-                    <button type="button" className={classes.btnDeleteTopping}>
-                      X
-                    </button>
-                  </Grid>
-                </Grid>
-              );
-            })}
-          </Grid>
-          <Grid item xs={4}>
-            <div>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    // checked={}
-                    onChange={handleChange}
-                    name="checkedA"
-                  />
-                }
-                label="เนื้อรวม"
-              />
-            </div>
-            {toppingBeef.map((item, index) => {
-              return (
-                <Grid container>
-                  <Grid xs>
-                    <Badge color="secondary" overlap="circle" badgeContent={1}>
-                      <FormControlLabel
-                        key={index}
-                        control={
-                          <Checkbox
-                            // checked={}
-                            onChange={handleChange}
-                            name={item.name}
-                          />
-                        }
-                        label={item.name}
-                      />
-                    </Badge>
-                  </Grid>
-                  <Grid>
-                    <button type="button" className={classes.btnAddTopping}>
-                      เพิ่ม
-                    </button>
-                    <button type="button" className={classes.btnDeleteTopping}>
-                      X
-                    </button>
-                  </Grid>
-                </Grid>
-              );
-            })}
-          </Grid>
-        </Grid>
-      </FormGroup>
+      <FoodDetail
+        noodles={noodles}
+        toppingPork={toppingPork}
+        toppingBeef={toppingBeef}
+        handleChange={handleChange}
+      />
       <hr />
-      <FormGroup row>
-        {typeOrders.map((item, index) => {
-          return (
-            <FormControlLabel
-              key={index}
-              control={
-                <Checkbox
-                  // checked={true}
-                  onChange={handleChange}
-                  name={item.name}
-                />
-              }
-              label={item.name}
-            />
-          );
-        })}
-      </FormGroup>
+      <TypeOrder typeOrders={typeOrders} handleChange={handleChange} />
       <Grid container>
         <Grid xs={8}>
-          <FormGroup className={classes.topSpace}>
-            <Grid container spacing={2}>
-              <Grid xs={2}>
-                <h5>จำนวน</h5>
-              </Grid>
-              <Grid xs={1}>
-                <h5>1</h5>
-              </Grid>
-              <Grid xs>
-                <Button
-                  size="small"
-                  variant="contained"
-                  className={classes.margin}
-                >
-                  <AddRoundedIcon />
-                </Button>
-                <Button
-                  size="small"
-                  variant="contained"
-                  className={classes.margin}
-                >
-                  <RemoveRoundedIcon />
-                </Button>
-              </Grid>
-            </Grid>
-          </FormGroup>
-          <FormGroup>
-            <RemarksDialog
-              isOpen={openDialogRemarks}
-              setOpenDialogRemarks={setOpenDialogRemarks}
-              datas={presetRemarks}
-            />
-            <FormControlLabel
-              className={classes.textRemark}
-              control={
-                <Checkbox
-                  // checked={}
-                  onChange={handleChangeRemarks}
-                  name="checkedA"
-                />
-              }
-              label="หมายเหตุ"
-            />
-          </FormGroup>
-          <FormGroup>
-            <RadioGroup
-              aria-label="gender"
-              name="typePrice"
-              value="ธรรมดา"
-              onChange={handleChange}
-            >
-              <Grid container>
-                <Grid xs={7}>
-                  <FormControlLabel
-                    className={classes.colorPrimary}
-                    value="ธรรมดา"
-                    control={
-                      <Radio
-                        checked={true}
-                        onChange={handleChange}
-                        name="checkedA"
-                      />
-                    }
-                    label="ธรรมดา 40 Panda (50)"
-                  />
-                </Grid>
-                <Grid xs>
-                  <Button
-                    size="small"
-                    variant="contained"
-                    className={classes.margin}
-                  >
-                    <AddRoundedIcon />
-                  </Button>
-                  <Button
-                    size="small"
-                    variant="contained"
-                    className={classes.margin}
-                  >
-                    <RemoveRoundedIcon />
-                  </Button>
-                </Grid>
-              </Grid>
-
-              <Grid container>
-                <Grid xs={7}>
-                  <FormControlLabel
-                    className={classes.colorSecondary}
-                    value="พิเศษ"
-                    control={
-                      <Radio
-                        checked={false}
-                        onChange={handleChange}
-                        name="checkedA"
-                      />
-                    }
-                    label="พิเศษ 50 Panda (60)"
-                  />
-                </Grid>
-                <Grid xs>
-                  <Button
-                    size="small"
-                    variant="contained"
-                    className={classes.margin}
-                  >
-                    <AddRoundedIcon />
-                  </Button>
-                  <Button
-                    size="small"
-                    variant="contained"
-                    className={classes.margin}
-                  >
-                    <RemoveRoundedIcon />
-                  </Button>
-                </Grid>
-              </Grid>
-            </RadioGroup>
-          </FormGroup>
+          <AmountOrder />
+          <Remark
+            handleChangeRemarks={handleChangeRemarks}
+            openDialogRemarks={openDialogRemarks}
+            setOpenDialogRemarks={setOpenDialogRemarks}
+            presetRemarks={presetRemarks}
+          />
+          <TypePrice handleChange={handleChange} />
         </Grid>
         <Grid xs={4}>
-          <FormGroup className={classes.topSpace}>
-            <Button variant="contained" className={classes.margin}>
-              ตรวจสอบออเดอร์
-            </Button>
-            <Button
-              variant="contained"
-              color="primary"
-              className={classes.margin}
-            >
-              เพิ่มออเดอร์
-            </Button>
-            <Button
-              variant="contained"
-              color="secondary"
-              className={classes.margin}
-            >
-              เสร็จสิ้น
-            </Button>
-            <Button
-              variant="outlined"
-              color="secondary"
-              className={classes.margin}
-            >
-              ยกเลิก
-            </Button>
-          </FormGroup>
+          <ActionButton />
         </Grid>
       </Grid>
     </form>
