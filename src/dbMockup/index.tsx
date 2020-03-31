@@ -1,19 +1,24 @@
 export const providers = [
   {
     id: 1,
-    name: "ร้านโกเอ"
+    name: "ร้านโกเอ",
+    default: false
   },
   {
     id: 2,
-    name: "FOOD PANDA"
+    name: "FOOD PANDA",
+    default: true
+  }
+];
+
+export const typeOrders = [
+  {
+    name: "ใส่ถุง",
+    default: true
   },
   {
-    id: 3,
-    name: "GRAB"
-  },
-  {
-    id: 4,
-    name: "LINE MAN"
+    name: "กินที่ร้าน",
+    default: false
   }
 ];
 
