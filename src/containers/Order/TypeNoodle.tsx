@@ -4,6 +4,7 @@ import Grid, { GridSpacing } from "@material-ui/core/Grid";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox, { CheckboxProps } from "@material-ui/core/Checkbox";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import { useFormikContext } from "formik";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -13,8 +14,13 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const TypeNoodle = ({ typeNoodles, handleChange }) => {
+const TypeNoodle = ({ typeNoodles, value }) => {
   const classes = useStyles();
+  const { setFieldValue } = useFormikContext();
+
+  const handleChange = e => {
+    setFieldValue("orderDetail.typeNoodle", e.currentTarget.name);
+  };
 
   return (
     <FormGroup row className={classes.topSpace}>
@@ -26,7 +32,7 @@ const TypeNoodle = ({ typeNoodles, handleChange }) => {
                 key={index}
                 control={
                   <Checkbox
-                    // checked={}
+                    checked={item.name === value ? true : false}
                     onChange={handleChange}
                     name={item.name}
                   />
