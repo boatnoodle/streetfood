@@ -30,22 +30,18 @@ const Remark = ({ presetRemarks }) => {
     setOpenDialogRemarks(!openDialogRemarks);
   };
   return (
-    <Grid container>
-      <Grid>
-        <FormGroup>
-          <RemarksDialog
-            isOpen={openDialogRemarks}
-            setOpenDialogRemarks={setOpenDialogRemarks}
-            datas={presetRemarks}
-          />
-          <Badge badgeContent={values.orderDetail.remarks.length} color="error">
-            <Button onClick={toggleDialog} variant="outlined" color="secondary">
-              หมายเหตุ
-            </Button>
-          </Badge>
-        </FormGroup>
-      </Grid>
-    </Grid>
+    <FormGroup>
+      <RemarksDialog
+        isOpen={openDialogRemarks}
+        setOpenDialogRemarks={setOpenDialogRemarks}
+        datas={presetRemarks}
+      />
+      <Badge badgeContent={values.orderDetail.remarks.length} color="error">
+        <Button onClick={toggleDialog} variant="outlined" color="secondary">
+          หมายเหตุ
+        </Button>
+      </Badge>
+    </FormGroup>
   );
 };
 

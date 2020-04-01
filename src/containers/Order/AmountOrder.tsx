@@ -40,15 +40,11 @@ const AmountOrder = () => {
   };
 
   return (
-    <FormGroup className={classes.topSpace}>
-      <Grid container spacing={2}>
-        <Grid xs={2}>
-          <h5>จำนวน</h5>
-        </Grid>
-        <Grid xs={1}>
-          <h5>{values.orderDetail.amountOrder}</h5>
-        </Grid>
-        <Grid xs>
+    <FormGroup>
+      <Grid container spacing={3} justify="flex-end">
+        <Grid xs={3}>จำนวน</Grid>
+        <Grid xs={1}>{values.orderDetail.amountOrder}</Grid>
+        <Grid>
           <Button
             onClick={() => handleAmountOrder("add")}
             size="small"

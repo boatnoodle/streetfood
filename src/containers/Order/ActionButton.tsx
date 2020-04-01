@@ -20,7 +20,7 @@ const ActionButton = () => {
   const classes = useStyles();
 
   return (
-    <FormGroup className={classes.topSpace}>
+    <FormGroup>
       <Button variant="contained" className={classes.margin}>
         ตรวจสอบออเดอร์
       </Button>

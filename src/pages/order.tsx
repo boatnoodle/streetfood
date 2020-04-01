@@ -38,6 +38,9 @@ const useStyles = makeStyles((theme: Theme) =>
     margin: {
       margin: theme.spacing(1)
     },
+    rowSpace: {
+      margin: "20px 0"
+    },
     topSpace: {
       marginTop: "20px"
     },
@@ -152,21 +155,28 @@ const OrderPage: React.FC = () => {
             </div>
             <Field name="typeOrder">
               {({ field }) => (
-                <Grid container>
-                  <Grid>
+                <Grid
+                  container
+                  alignItems="center"
+                  className={classes.rowSpace}
+                >
+                  <Grid item>
                     <TypeOrder typeOrders={typeOrders} {...field} />
                   </Grid>
-                  <Grid xs>
+                  <Grid item>
                     <Remark presetRemarks={presetRemarks} />
+                  </Grid>
+                  <Grid item xs>
+                    <Field name="amountOrder">
+                      {({ field }) => <AmountOrder {...field} />}
+                    </Field>
                   </Grid>
                 </Grid>
               )}
             </Field>
+            <hr />
             <Grid container>
               <Grid xs={8}>
-                <Field name="amountOrder">
-                  {({ field }) => <AmountOrder {...field} />}
-                </Field>
                 <TypePrice />
               </Grid>
               <Grid xs={4}>
