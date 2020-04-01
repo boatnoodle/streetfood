@@ -57,7 +57,6 @@ const OrderDetail = ({ noodles, toppingPork, toppingBeef, handleChange }) => {
       if (values.orderDetail.allToppingBeef) {
         setFieldValue("orderDetail.topping", [...toppingBeef]);
       } else {
-        console.log(values.orderDetail.topping, " xxx");
         setFieldValue("orderDetail.topping", [...restToppingBeef]);
       }
     } else if (type === "toppingBeef" && isChecked) {
