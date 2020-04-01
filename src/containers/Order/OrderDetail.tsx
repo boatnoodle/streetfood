@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import FormGroup from "@material-ui/core/FormGroup";
 import Grid, { GridSpacing } from "@material-ui/core/Grid";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -38,6 +38,12 @@ const OrderDetail = ({ noodles, toppingPork, toppingBeef, handleChange }) => {
   const classes = useStyles();
 
   const allTopping = (e, type) => {
+    const restToppingPork = values.orderDetail.topping.filter(
+      item => item.typeTopping === "toppingPork"
+    );
+    const restToppingBeef = values.orderDetail.topping.filter(
+      item => item.typeTopping === "toppingBeef"
+    );
     const isChecked = e.currentTarget.checked;
 
     if (type === "toppingPork" && isChecked) {
@@ -51,7 +57,8 @@ const OrderDetail = ({ noodles, toppingPork, toppingBeef, handleChange }) => {
       if (values.orderDetail.allToppingBeef) {
         setFieldValue("orderDetail.topping", [...toppingBeef]);
       } else {
-        setFieldValue("orderDetail.topping", []);
+        console.log(values.orderDetail.topping, " xxx");
+        setFieldValue("orderDetail.topping", [...restToppingBeef]);
       }
     } else if (type === "toppingBeef" && isChecked) {
       setFieldValue("orderDetail.allToppingBeef", true);
@@ -64,34 +71,70 @@ const OrderDetail = ({ noodles, toppingPork, toppingBeef, handleChange }) => {
       if (values.orderDetail.allToppingPork) {
         setFieldValue("orderDetail.topping", [...toppingPork]);
       } else {
-        setFieldValue("orderDetail.topping", []);
+        setFieldValue("orderDetail.topping", [...restToppingPork]);
       }
     }
   };
 
   const handleChangeTopping = (e, type) => {
     const isChecked = e.currentTarget.checked;
-    const value = e.currentTarget.name;
-    const valueTopping = values.orderDetail.topping.filter(
-      item => item.typeTopping === type
-    );
+    const name = e.currentTarget.name;
+    const object =
+      type === "toppingPork"
+        ? toppingPork.find(item => item.name === name)
+        : toppingBeef.find(item => item.name === name);
 
-    if (type === "toppingPork" && isChecked) {
-      //TODO:: handle topping case
-      // setFieldValue('topping', [...values.orderDetail.topping,])
-      // if(values.orderDetail.topping.filter(iten => item.typeTopping === type ).length === toppingPork.length)  {
-      // setFieldValue("orderDetail.allToppingPork", true);
-      // }
+    if (isChecked) {
+      let totalTopping;
+      if (type === "toppingPork") {
+        const restTopping = values.orderDetail.topping.filter(
+          item => item.typeTopping === "toppingPork"
+        );
+        totalTopping = [...restTopping, object];
+        if (totalTopping.length === toppingPork.length) {
+          setFieldValue("orderDetail.allToppingPork", true);
+        }
+      } else {
+        const restTopping = values.orderDetail.topping.filter(
+          item => item.typeTopping === "toppingBeef"
+        );
+        totalTopping = [...restTopping, object];
+        if (totalTopping.length === toppingBeef.length) {
+          setFieldValue("orderDetail.allToppingBeef", true);
+        }
+      }
+
+      setFieldValue("orderDetail.topping", [
+        ...values.orderDetail.topping,
+        object
+      ]);
+    } else {
+      if (type === "toppingPork") {
+        setFieldValue("orderDetail.allToppingPork", false);
+      } else {
+        setFieldValue("orderDetail.allToppingBeef", false);
+      }
+      const toppingNotInvoled = values.orderDetail.topping.filter(
+        item => item.typeTopping !== type
+      );
+
+      const toppingFilter = values.orderDetail.topping.filter(
+        item => item.typeTopping === type && item.name !== name
+      );
+      setFieldValue("orderDetail.topping", [
+        ...toppingNotInvoled,
+        ...toppingFilter
+      ]);
     }
   };
 
   return (
     <FormGroup row>
       <Grid container spacing={2}>
-        <Grid item xs={4}>
+        <Grid xs={4}>
           {noodles.map((item, index) => {
             return (
-              <div>
+              <div key={index}>
                 <FormControlLabel
                   key={index}
                   control={
@@ -112,6 +155,7 @@ const OrderDetail = ({ noodles, toppingPork, toppingBeef, handleChange }) => {
             <FormControlLabel
               control={
                 <Checkbox
+                  checked={values.orderDetail.allToppingPork}
                   onChange={e => allTopping(e, "toppingPork")}
                   name="checkedA"
                 />
@@ -121,7 +165,7 @@ const OrderDetail = ({ noodles, toppingPork, toppingBeef, handleChange }) => {
           </div>
           {toppingPork.map((item, index) => {
             return (
-              <Grid container>
+              <Grid container key={index}>
                 <Grid xs>
                   <FormControlLabel
                     key={index}
@@ -129,12 +173,14 @@ const OrderDetail = ({ noodles, toppingPork, toppingBeef, handleChange }) => {
                       <Checkbox
                         checked={
                           !!values.orderDetail.topping.find(
-                            item2 => item2.name === item.name
+                            item2 =>
+                              item2.name === item.name &&
+                              item2.typeTopping === "toppingPork"
                           )
                             ? true
                             : false
                         }
-                        onChange={handleChange}
+                        onChange={e => handleChangeTopping(e, "toppingPork")}
                         name={item.name}
                       />
                     }
@@ -153,12 +199,12 @@ const OrderDetail = ({ noodles, toppingPork, toppingBeef, handleChange }) => {
             );
           })}
         </Grid>
-        <Grid item xs={4}>
+        <Grid xs={4}>
           <div>
             <FormControlLabel
               control={
                 <Checkbox
-                  // checked={}
+                  checked={values.orderDetail.allToppingBeef}
                   onChange={e => allTopping(e, "toppingBeef")}
                   name="checkedA"
                 />
@@ -168,15 +214,23 @@ const OrderDetail = ({ noodles, toppingPork, toppingBeef, handleChange }) => {
           </div>
           {toppingBeef.map((item, index) => {
             return (
-              <Grid container>
+              <Grid container key={index}>
                 <Grid xs>
                   <Badge color="secondary" overlap="circle" badgeContent={0}>
                     <FormControlLabel
                       key={index}
                       control={
                         <Checkbox
-                          // checked={}
-                          onChange={handleChange}
+                          checked={
+                            !!values.orderDetail.topping.find(
+                              item2 =>
+                                item2.name === item.name &&
+                                item2.typeTopping === "toppingBeef"
+                            )
+                              ? true
+                              : false
+                          }
+                          onChange={e => handleChangeTopping(e, "toppingBeef")}
                           name={item.name}
                         />
                       }

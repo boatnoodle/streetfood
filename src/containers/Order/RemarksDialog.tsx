@@ -87,7 +87,7 @@ const RemarksDialog = ({ isOpen = false, setOpenDialogRemarks, datas }) => {
           <Grid container spacing={2}>
             {datas.map((item, index) => {
               return (
-                <Grid item xs={4}>
+                <Grid item xs={4} key={index}>
                   <FormControlLabel
                     control={
                       <Checkbox

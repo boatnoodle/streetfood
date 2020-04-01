@@ -63,7 +63,7 @@ const OrderPage: React.FC = () => {
     orderDetail: {
       typeNoodle: "เรือ",
       noodle: "",
-      allToppingPork: true,
+      allToppingPork: false,
       allToppingBeef: false,
       topping: [],
       typePrice: "ธรรมดา",
@@ -124,7 +124,6 @@ const OrderPage: React.FC = () => {
       onSubmit={handleSubmit}
     >
       {({ handleSubmit, errors, values }) => {
-        console.log(values, " change");
         return (
           <div className={classes.root}>
             <div className={classes.queueNumber}>
