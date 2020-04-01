@@ -7,6 +7,7 @@ import Checkbox, { CheckboxProps } from "@material-ui/core/Checkbox";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import AddRoundedIcon from "@material-ui/icons/AddRounded";
 import RemoveRoundedIcon from "@material-ui/icons/RemoveRounded";
+import { useFormikContext } from "formik";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -21,6 +22,25 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const AmountOrder = () => {
   const classes = useStyles();
+  const { values, setFieldValue } = useFormikContext<any>();
+
+  const handleAmountOrder = action => {
+    const actionAdd = "add";
+
+    if (action === actionAdd) {
+      setFieldValue(
+        "orderDetail.amountOrder",
+        values.orderDetail.amountOrder + 1
+      );
+    } else {
+      if (values.orderDetail.amountOrder > 1)
+        setFieldValue(
+          "orderDetail.amountOrder",
+          values.orderDetail.amountOrder - 1
+        );
+    }
+  };
+
   return (
     <FormGroup className={classes.topSpace}>
       <Grid container spacing={2}>
@@ -28,13 +48,23 @@ const AmountOrder = () => {
           <h5>จำนวน</h5>
         </Grid>
         <Grid xs={1}>
-          <h5>1</h5>
+          <h5>{values.orderDetail.amountOrder}</h5>
         </Grid>
         <Grid xs>
-          <Button size="small" variant="contained" className={classes.margin}>
+          <Button
+            onClick={() => handleAmountOrder("add")}
+            size="small"
+            variant="contained"
+            className={classes.margin}
+          >
             <AddRoundedIcon />
           </Button>
-          <Button size="small" variant="contained" className={classes.margin}>
+          <Button
+            onClick={() => handleAmountOrder("delete")}
+            size="small"
+            variant="contained"
+            className={classes.margin}
+          >
             <RemoveRoundedIcon />
           </Button>
         </Grid>

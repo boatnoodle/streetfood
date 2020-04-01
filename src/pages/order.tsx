@@ -66,8 +66,10 @@ const OrderPage: React.FC = () => {
       allToppingPork: false,
       allToppingBeef: false,
       topping: [],
-      typePrice: "ธรรมดา",
-      price: null,
+      price: {
+        typePrice: "ธรรมดา",
+        price: 40
+      },
       amountOrder: 1,
       remarks: ""
     }
@@ -151,19 +153,12 @@ const OrderPage: React.FC = () => {
               noodles={noodles}
               toppingPork={toppingPork}
               toppingBeef={toppingBeef}
-              handleChange={handleChange}
             />
             <div>
               <hr />
             </div>
             <Field name="typeOrder">
-              {({ field }) => (
-                <TypeOrder
-                  typeOrders={typeOrders}
-                  handleChange={handleChange}
-                  {...field}
-                />
-              )}
+              {({ field }) => <TypeOrder typeOrders={typeOrders} {...field} />}
             </Field>
             <Grid container>
               <Grid xs={8}>
@@ -176,7 +171,7 @@ const OrderPage: React.FC = () => {
                   setOpenDialogRemarks={setOpenDialogRemarks}
                   presetRemarks={presetRemarks}
                 />
-                <TypePrice handleChange={handleChange} />
+                <TypePrice />
               </Grid>
               <Grid xs={4}>
                 <ActionButton />

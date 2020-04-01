@@ -1,14 +1,14 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import FormGroup from "@material-ui/core/FormGroup";
 import Grid, { GridSpacing } from "@material-ui/core/Grid";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox, { CheckboxProps } from "@material-ui/core/Checkbox";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import AddRoundedIcon from "@material-ui/icons/AddRounded";
 import RemoveRoundedIcon from "@material-ui/icons/RemoveRounded";
+import { useFormikContext } from "formik";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -27,15 +27,135 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const TypePrice = ({ handleChange }) => {
+const TypePrice = () => {
   const classes = useStyles();
+  const { values, setFieldValue } = useFormikContext<any>();
+  const [informationPrice, setInformationPrice] = useState({
+    labelNormal: null,
+    priceNormal: 0,
+    labelSpecial: null,
+    priceSpecial: 0
+  });
+  const myShop = "ร้านโกเอ";
+  const panda = "FOOD PANDA";
+  const normalPrice = "ธรรมดา";
+  const specialPrice = "พิเศษ";
+
+  const handleChange = e => {
+    const name = e.currentTarget.name;
+    let price;
+    if (name === normalPrice) {
+      price = informationPrice.priceNormal;
+    } else if (name === specialPrice) {
+      price = informationPrice.priceSpecial;
+    }
+
+    setFieldValue("orderDetail.price.typePrice", name);
+    setFieldValue("orderDetail.price.price", price);
+  };
+
+  const handlePrice = (action, typePrice) => {
+    const actionAdd = "add";
+    const myShopPriceNormal = 40;
+    const myShopPriceSpecial = 50;
+    const pandaPriceNormal = 50;
+    const pandaPriceSpecial = 60;
+
+    if (action === actionAdd) {
+      if (typePrice === normalPrice) {
+        setInformationPrice({
+          ...informationPrice,
+          priceNormal: informationPrice.priceNormal + 10
+        });
+      }
+      if (typePrice === specialPrice) {
+        setInformationPrice({
+          ...informationPrice,
+          priceSpecial: informationPrice.priceSpecial + 10
+        });
+      }
+      setFieldValue(
+        "orderDetail.price.price",
+        values.orderDetail.price.price + 10
+      );
+    } else {
+      let minPrice;
+
+      if (values.provider === myShop && typePrice === normalPrice) {
+        minPrice = myShopPriceNormal;
+      } else if (values.provider === myShop && typePrice === specialPrice) {
+        minPrice = myShopPriceSpecial;
+      } else if (values.provider === panda && typePrice === normalPrice) {
+        minPrice = pandaPriceNormal;
+      } else if (values.provider === panda && typePrice === specialPrice) {
+        minPrice = pandaPriceSpecial;
+      }
+
+      let latestPrice;
+      console.log(values.orderDetail.price.price, minPrice);
+      if (typePrice === normalPrice) {
+        latestPrice = informationPrice.priceNormal - 10;
+
+        setInformationPrice({
+          ...informationPrice,
+          priceNormal:
+            latestPrice >= minPrice ? latestPrice : informationPrice.priceNormal
+        });
+      } else {
+        latestPrice = informationPrice.priceSpecial - 10;
+        setInformationPrice({
+          ...informationPrice,
+          priceSpecial:
+            latestPrice >= minPrice
+              ? latestPrice
+              : informationPrice.priceSpecial
+        });
+      }
+      setFieldValue("orderDetail.price.price", latestPrice);
+    }
+  };
+
+  useEffect(() => {
+    getPriceFromProvider();
+  }, [values.provider]);
+
+  const getPriceFromProvider = () => {
+    const provider = values.provider;
+    const typePrice = values.orderDetail.price.typePrice;
+    const informationPrice = {
+      labelNormal: null,
+      priceNormal: 0,
+      labelSpecial: null,
+      priceSpecial: 0
+    };
+
+    if (provider === myShop) {
+      informationPrice.labelNormal = "ธรรมดา";
+      informationPrice.priceNormal = 40;
+      informationPrice.labelSpecial = "พิเศษ";
+      informationPrice.priceSpecial = 50;
+    } else if (provider === panda) {
+      informationPrice.labelNormal = "ธรรมดา Panda";
+      informationPrice.priceNormal = 50;
+      informationPrice.labelSpecial = "พิเศษ Panda";
+      informationPrice.priceSpecial = 60;
+    }
+
+    if (typePrice === normalPrice) {
+      setFieldValue("orderDetail.price.price", informationPrice.priceNormal);
+    }
+    if (typePrice === specialPrice) {
+      setFieldValue("orderDetail.price.price", informationPrice.priceSpecial);
+    }
+
+    return setInformationPrice(informationPrice);
+  };
 
   return (
     <FormGroup>
       <RadioGroup
         aria-label="gender"
-        name="typePrice"
-        value="ธรรมดา"
+        value={values.orderDetail.price.typePrice}
         onChange={handleChange}
       >
         <Grid container>
@@ -43,17 +163,29 @@ const TypePrice = ({ handleChange }) => {
             <FormControlLabel
               className={classes.colorPrimary}
               value="ธรรมดา"
-              control={
-                <Radio checked={true} onChange={handleChange} name="checkedA" />
+              control={<Radio onChange={handleChange} name="ธรรมดา" />}
+              label={
+                informationPrice.labelNormal +
+                " " +
+                informationPrice.priceNormal
               }
-              label="ธรรมดา 40 Panda (50)"
             />
           </Grid>
           <Grid xs>
-            <Button size="small" variant="contained" className={classes.margin}>
+            <Button
+              onClick={() => handlePrice("add", "ธรรมดา")}
+              size="small"
+              variant="contained"
+              className={classes.margin}
+            >
               <AddRoundedIcon />
             </Button>
-            <Button size="small" variant="contained" className={classes.margin}>
+            <Button
+              onClick={() => handlePrice("delete", "ธรรมดา")}
+              size="small"
+              variant="contained"
+              className={classes.margin}
+            >
               <RemoveRoundedIcon />
             </Button>
           </Grid>
@@ -64,21 +196,29 @@ const TypePrice = ({ handleChange }) => {
             <FormControlLabel
               className={classes.colorSecondary}
               value="พิเศษ"
-              control={
-                <Radio
-                  checked={false}
-                  onChange={handleChange}
-                  name="checkedA"
-                />
+              control={<Radio onChange={handleChange} name="พิเศษ" />}
+              label={
+                informationPrice.labelSpecial +
+                " " +
+                informationPrice.priceSpecial
               }
-              label="พิเศษ 50 Panda (60)"
             />
           </Grid>
           <Grid xs>
-            <Button size="small" variant="contained" className={classes.margin}>
+            <Button
+              onClick={() => handlePrice("add", "พิเศษ")}
+              size="small"
+              variant="contained"
+              className={classes.margin}
+            >
               <AddRoundedIcon />
             </Button>
-            <Button size="small" variant="contained" className={classes.margin}>
+            <Button
+              onClick={() => handlePrice("delete", "พิเศษ")}
+              size="small"
+              variant="contained"
+              className={classes.margin}
+            >
               <RemoveRoundedIcon />
             </Button>
           </Grid>

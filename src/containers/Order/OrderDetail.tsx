@@ -33,9 +33,20 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const OrderDetail = ({ noodles, toppingPork, toppingBeef, handleChange }) => {
+const OrderDetail = ({ noodles, toppingPork, toppingBeef }) => {
   const { values, setFieldValue } = useFormikContext<any>();
   const classes = useStyles();
+
+  const handleChangeNoodle = e => {
+    const isChecked = e.currentTarget.checked;
+    const name = e.currentTarget.name;
+
+    if (isChecked) {
+      setFieldValue("orderDetail.noodle", name);
+    } else {
+      setFieldValue("orderDetail.noodle", "");
+    }
+  };
 
   const handleAllTopping = (e, type) => {
     const restToppingPork = values.orderDetail.topping.filter(
@@ -167,11 +178,7 @@ const OrderDetail = ({ noodles, toppingPork, toppingBeef, handleChange }) => {
                 <FormControlLabel
                   key={index}
                   control={
-                    <Checkbox
-                      // checked={}
-                      onChange={handleChange}
-                      name={item.name}
-                    />
+                    <Checkbox onChange={handleChangeNoodle} name={item.name} />
                   }
                   label={item.name}
                 />
@@ -186,7 +193,6 @@ const OrderDetail = ({ noodles, toppingPork, toppingBeef, handleChange }) => {
                 <Checkbox
                   checked={values.orderDetail.allToppingPork}
                   onChange={e => handleAllTopping(e, "toppingPork")}
-                  name="checkedA"
                 />
               }
               label="หมูรวม"
@@ -253,7 +259,6 @@ const OrderDetail = ({ noodles, toppingPork, toppingBeef, handleChange }) => {
                 <Checkbox
                   checked={values.orderDetail.handleAllToppingBeef}
                   onChange={e => handleAllTopping(e, "toppingBeef")}
-                  name="checkedA"
                 />
               }
               label="เนื้อรวม"
