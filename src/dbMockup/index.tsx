@@ -78,42 +78,42 @@ export const toppingPork = [
     name: "ลูกชิ้นหมู",
     price: 10,
     addMore: false,
-    amount: 1,
+    amount: 0,
     typeTopping: "toppingPork"
   },
   {
     name: "หมูสด",
     price: 10,
     addMore: false,
-    amount: 1,
+    amount: 0,
     typeTopping: "toppingPork"
   },
   {
     name: "หมูตุ๋น",
     price: 10,
     addMore: false,
-    amount: 1,
+    amount: 0,
     typeTopping: "toppingPork"
   },
   {
     name: "ตับ",
     price: 10,
     addMore: false,
-    amount: 1,
+    amount: 0,
     typeTopping: "toppingPork"
   },
   {
     name: "หัวใจ",
     price: 10,
     addMore: false,
-    amount: 1,
+    amount: 0,
     typeTopping: "toppingPork"
   },
   {
     name: "ม้ามหมู",
     price: 10,
     addMore: false,
-    amount: 1,
+    amount: 0,
     typeTopping: "toppingPork"
   }
 ];
@@ -123,42 +123,42 @@ export const toppingBeef = [
     name: "ลูกชิ้นเนื้อ",
     price: 10,
     addMore: false,
-    amount: 1,
+    amount: 0,
     typeTopping: "toppingBeef"
   },
   {
     name: "เนื้อสด",
     price: 10,
     addMore: false,
-    amount: 1,
+    amount: 0,
     typeTopping: "toppingBeef"
   },
   {
     name: "เนื้อตุ๋น",
     price: 10,
     addMore: false,
-    amount: 1,
+    amount: 0,
     typeTopping: "toppingBeef"
   },
   {
     name: "ตับ",
     price: 10,
     addMore: false,
-    amount: 1,
+    amount: 0,
     typeTopping: "toppingBeef"
   },
   {
     name: "ผ้าขี้ริ้ว",
     price: 10,
     addMore: false,
-    amount: 1,
+    amount: 0,
     typeTopping: "toppingBeef"
   },
   {
     name: "ม้ามเนื้อ",
     price: 10,
     addMore: false,
-    amount: 1,
+    amount: 0,
     typeTopping: "toppingBeef"
   }
 ];

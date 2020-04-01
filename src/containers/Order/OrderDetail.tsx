@@ -37,7 +37,7 @@ const OrderDetail = ({ noodles, toppingPork, toppingBeef, handleChange }) => {
   const { values, setFieldValue } = useFormikContext<any>();
   const classes = useStyles();
 
-  const allTopping = (e, type) => {
+  const handleAllTopping = (e, type) => {
     const restToppingPork = values.orderDetail.topping.filter(
       item => item.typeTopping === "toppingPork"
     );
@@ -127,6 +127,36 @@ const OrderDetail = ({ noodles, toppingPork, toppingBeef, handleChange }) => {
     }
   };
 
+  const handleAddMoreTopping = (nameTopping, typeTopping, action) => {
+    const actionAdd = "add";
+    const actionDelete = "delete";
+    const target = values.orderDetail?.topping.find(
+      item => item.name === nameTopping && item.typeTopping === typeTopping
+    );
+    const updatedToping = values.orderDetail?.topping.map(item => {
+      if (JSON.stringify(item) !== JSON.stringify(target)) return item;
+      return {
+        ...item,
+        amount:
+          action === actionAdd
+            ? item.amount + 1
+            : action === actionDelete && item.amount !== 0
+            ? item.amount - 1
+            : 0
+      };
+    });
+    setFieldValue("orderDetail.topping", updatedToping);
+  };
+
+  const getTotalMoreTopping = item => {
+    const moreTopping = values.orderDetail.topping.find(
+      current =>
+        current.name === item.name && current.typeTopping === item.typeTopping
+    );
+    if (moreTopping) return moreTopping.amount;
+    return 0;
+  };
+
   return (
     <FormGroup row>
       <Grid container spacing={2}>
@@ -155,7 +185,7 @@ const OrderDetail = ({ noodles, toppingPork, toppingBeef, handleChange }) => {
               control={
                 <Checkbox
                   checked={values.orderDetail.allToppingPork}
-                  onChange={e => allTopping(e, "toppingPork")}
+                  onChange={e => handleAllTopping(e, "toppingPork")}
                   name="checkedA"
                 />
               }
@@ -166,31 +196,49 @@ const OrderDetail = ({ noodles, toppingPork, toppingBeef, handleChange }) => {
             return (
               <Grid container key={index}>
                 <Grid xs>
-                  <FormControlLabel
-                    key={index}
-                    control={
-                      <Checkbox
-                        checked={
-                          !!values.orderDetail.topping.find(
-                            item2 =>
-                              item2.name === item.name &&
-                              item2.typeTopping === "toppingPork"
-                          )
-                            ? true
-                            : false
-                        }
-                        onChange={e => handleChangeTopping(e, "toppingPork")}
-                        name={item.name}
-                      />
-                    }
-                    label={item.name}
-                  />
+                  <Badge
+                    color="secondary"
+                    overlap="circle"
+                    badgeContent={getTotalMoreTopping(item)}
+                  >
+                    <FormControlLabel
+                      key={index}
+                      control={
+                        <Checkbox
+                          checked={
+                            !!values.orderDetail.topping.find(
+                              item2 =>
+                                item2.name === item.name &&
+                                item2.typeTopping === "toppingPork"
+                            )
+                              ? true
+                              : false
+                          }
+                          onChange={e => handleChangeTopping(e, "toppingPork")}
+                          name={item.name}
+                        />
+                      }
+                      label={item.name}
+                    />
+                  </Badge>
                 </Grid>
                 <Grid xs={4}>
-                  <button type="button" className={classes.btnAddTopping}>
+                  <button
+                    onClick={() =>
+                      handleAddMoreTopping(item.name, "toppingPork", "add")
+                    }
+                    type="button"
+                    className={classes.btnAddTopping}
+                  >
                     เพิ่ม
                   </button>
-                  <button type="button" className={classes.btnDeleteTopping}>
+                  <button
+                    onClick={() =>
+                      handleAddMoreTopping(item.name, "toppingPork", "delete")
+                    }
+                    type="button"
+                    className={classes.btnDeleteTopping}
+                  >
                     ลด
                   </button>
                 </Grid>
@@ -203,8 +251,8 @@ const OrderDetail = ({ noodles, toppingPork, toppingBeef, handleChange }) => {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={values.orderDetail.allToppingBeef}
-                  onChange={e => allTopping(e, "toppingBeef")}
+                  checked={values.orderDetail.handleAllToppingBeef}
+                  onChange={e => handleAllTopping(e, "toppingBeef")}
                   name="checkedA"
                 />
               }
@@ -215,7 +263,11 @@ const OrderDetail = ({ noodles, toppingPork, toppingBeef, handleChange }) => {
             return (
               <Grid container key={index}>
                 <Grid xs>
-                  <Badge color="secondary" overlap="circle" badgeContent={0}>
+                  <Badge
+                    color="secondary"
+                    overlap="circle"
+                    badgeContent={getTotalMoreTopping(item)}
+                  >
                     <FormControlLabel
                       key={index}
                       control={
@@ -238,10 +290,22 @@ const OrderDetail = ({ noodles, toppingPork, toppingBeef, handleChange }) => {
                   </Badge>
                 </Grid>
                 <Grid>
-                  <button type="button" className={classes.btnAddTopping}>
+                  <button
+                    onClick={() =>
+                      handleAddMoreTopping(item.name, "toppingBeef", "add")
+                    }
+                    type="button"
+                    className={classes.btnAddTopping}
+                  >
                     เพิ่ม
                   </button>
-                  <button type="button" className={classes.btnDeleteTopping}>
+                  <button
+                    onClick={() =>
+                      handleAddMoreTopping(item.name, "toppingBeef", "delete")
+                    }
+                    type="button"
+                    className={classes.btnDeleteTopping}
+                  >
                     ลด
                   </button>
                 </Grid>

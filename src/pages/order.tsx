@@ -124,6 +124,7 @@ const OrderPage: React.FC = () => {
       onSubmit={handleSubmit}
     >
       {({ handleSubmit, errors, values }) => {
+        console.log(values, "values");
         return (
           <div className={classes.root}>
             <div className={classes.queueNumber}>
