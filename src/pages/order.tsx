@@ -50,7 +50,6 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const OrderPage: React.FC = () => {
-  const [openDialogRemarks, setOpenDialogRemarks] = useState(false);
   const classes = useStyles();
   const firebase = useFirebase();
   const initialValues = {
@@ -71,14 +70,8 @@ const OrderPage: React.FC = () => {
         price: 40
       },
       amountOrder: 1,
-      remarks: ""
+      remarks: []
     }
-  };
-
-  const handleChangeRemarks = e => {
-    const checked = e.currentTarget.checked;
-    if (checked) setOpenDialogRemarks(true);
-    else setOpenDialogRemarks(false);
   };
 
   const addData = () => {
@@ -158,19 +151,22 @@ const OrderPage: React.FC = () => {
               <hr />
             </div>
             <Field name="typeOrder">
-              {({ field }) => <TypeOrder typeOrders={typeOrders} {...field} />}
+              {({ field }) => (
+                <Grid container>
+                  <Grid>
+                    <TypeOrder typeOrders={typeOrders} {...field} />
+                  </Grid>
+                  <Grid xs>
+                    <Remark presetRemarks={presetRemarks} />
+                  </Grid>
+                </Grid>
+              )}
             </Field>
             <Grid container>
               <Grid xs={8}>
                 <Field name="amountOrder">
                   {({ field }) => <AmountOrder {...field} />}
                 </Field>
-                <Remark
-                  handleChangeRemarks={handleChangeRemarks}
-                  openDialogRemarks={openDialogRemarks}
-                  setOpenDialogRemarks={setOpenDialogRemarks}
-                  presetRemarks={presetRemarks}
-                />
                 <TypePrice />
               </Grid>
               <Grid xs={4}>

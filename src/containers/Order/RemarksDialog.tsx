@@ -16,6 +16,7 @@ import Typography from "@material-ui/core/Typography";
 import Grid, { GridSpacing } from "@material-ui/core/Grid";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox, { CheckboxProps } from "@material-ui/core/Checkbox";
+import { useFormikContext } from "formik";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -69,10 +70,29 @@ const DialogActions = withStyles((theme: Theme) => ({
 }))(MuiDialogActions);
 
 const RemarksDialog = ({ isOpen = false, setOpenDialogRemarks, datas }) => {
+  const { values, setFieldValue } = useFormikContext<any>();
+
   const handleClose = () => {
-    console.log(!isOpen);
     setOpenDialogRemarks(!isOpen);
   };
+
+  const handleChange = e => {
+    const checked = e.currentTarget.checked;
+    const name = e.currentTarget.name;
+
+    if (checked) {
+      setFieldValue("orderDetail.remarks", [
+        ...values.orderDetail.remarks,
+        name
+      ]);
+    } else {
+      const deleteWord = values.orderDetail.remarks.filter(
+        item => item !== name
+      );
+      setFieldValue("orderDetail.remarks", [...deleteWord]);
+    }
+  };
+
   return (
     <div>
       <Dialog
@@ -91,9 +111,13 @@ const RemarksDialog = ({ isOpen = false, setOpenDialogRemarks, datas }) => {
                   <FormControlLabel
                     control={
                       <Checkbox
+                        checked={
+                          values.orderDetail.remarks.indexOf(item.name) !== -1
+                            ? true
+                            : false
+                        }
                         key={index}
-                        // checked={}
-                        // onChange={handleChange}
+                        onChange={handleChange}
                         name={item.name}
                       />
                     }

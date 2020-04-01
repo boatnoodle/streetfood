@@ -2,8 +2,6 @@ import React from "react";
 import Button from "@material-ui/core/Button";
 import FormGroup from "@material-ui/core/FormGroup";
 import Grid, { GridSpacing } from "@material-ui/core/Grid";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox, { CheckboxProps } from "@material-ui/core/Checkbox";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import AddRoundedIcon from "@material-ui/icons/AddRounded";
 import RemoveRoundedIcon from "@material-ui/icons/RemoveRounded";

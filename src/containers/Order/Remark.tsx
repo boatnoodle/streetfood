@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import FormGroup from "@material-ui/core/FormGroup";
 import Grid, { GridSpacing } from "@material-ui/core/Grid";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox, { CheckboxProps } from "@material-ui/core/Checkbox";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { RemarksDialog } from "containers/Order/RemarksDialog";
+import Badge from "@material-ui/core/Badge";
+import { useFormikContext } from "formik";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -21,32 +21,31 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const Remark = ({
-  handleChangeRemarks,
-  openDialogRemarks,
-  setOpenDialogRemarks,
-  presetRemarks
-}) => {
+const Remark = ({ presetRemarks }) => {
   const classes = useStyles();
+  const { values } = useFormikContext<any>();
+  const [openDialogRemarks, setOpenDialogRemarks] = useState(false);
+
+  const toggleDialog = () => {
+    setOpenDialogRemarks(!openDialogRemarks);
+  };
   return (
-    <FormGroup>
-      <RemarksDialog
-        isOpen={openDialogRemarks}
-        setOpenDialogRemarks={setOpenDialogRemarks}
-        datas={presetRemarks}
-      />
-      <FormControlLabel
-        className={classes.textRemark}
-        control={
-          <Checkbox
-            // checked={}
-            onChange={handleChangeRemarks}
-            name="checkedA"
+    <Grid container>
+      <Grid>
+        <FormGroup>
+          <RemarksDialog
+            isOpen={openDialogRemarks}
+            setOpenDialogRemarks={setOpenDialogRemarks}
+            datas={presetRemarks}
           />
-        }
-        label="หมายเหตุ"
-      />
-    </FormGroup>
+          <Badge badgeContent={values.orderDetail.remarks.length} color="error">
+            <Button onClick={toggleDialog} variant="outlined" color="secondary">
+              หมายเหตุ
+            </Button>
+          </Badge>
+        </FormGroup>
+      </Grid>
+    </Grid>
   );
 };
 
