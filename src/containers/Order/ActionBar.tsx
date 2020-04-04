@@ -36,7 +36,8 @@ const useStyles = makeStyles((theme: Theme) =>
 const ActionButton = ({
   openAmountOrder,
   setOpenAmountOrder,
-  handleAddOrder
+  handleAddOrder,
+  handleSubmit
 }) => {
   const classes = useStyles();
   const { values, resetForm } = useFormikContext<any>();
@@ -63,7 +64,7 @@ const ActionButton = ({
       <Button variant="contained" color="secondary" onClick={handleResetForm}>
         เคลีย
       </Button>
-      <Button variant="contained" color="secondary">
+      <Button variant="contained" color="secondary" onClick={handleSubmit}>
         เสร็จ
       </Button>
     </AppBar>

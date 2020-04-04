@@ -168,6 +168,7 @@ const Order = ({ handleSubmit }) => {
         openAmountOrder={openAmountOrder}
         setOpenAmountOrder={setOpenAmountOrder}
         handleAddOrder={handleAddOrder}
+        handleSubmit={handleSubmit}
       />
       <hr />
       <ComfirmDialog

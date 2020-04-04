@@ -1,48 +1,32 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useFirebase } from "components/Firebase/useFirebase";
 import { Formik } from "formik";
 import Order from "containers/Order";
+import Snackbar from "@material-ui/core/Snackbar";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
+import Backdrop from "@material-ui/core/Backdrop";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    backdrop: {
+      zIndex: theme.zIndex.drawer + 1,
+      color: "#fff"
+    }
+  })
+);
 
 const OrderPage: React.FC = () => {
+  const classes = useStyles();
+  const [openSnackBar, setOpenSnackBar] = React.useState(false);
+  const [openBackDrop, setOpenBackDrop] = React.useState(false);
   const firebase = useFirebase();
   const initialValues = {
     tableNo: null,
     queueNo: 1,
-    orders: [
-      // {
-      //   typeMenu: "ก๋วยเตี๋ยว",
-      //   typeNoodle: "เรือ",
-      //   noodle: "หมี่",
-      //   allToppingPork: false,
-      //   allToppingBeef: false,
-      //   topping: [
-      //     {
-      //       name: "ลูกชิ้นหมู",
-      //       price: 10,
-      //       addMore: false,
-      //       amount: 0,
-      //       typeTopping: "toppingPork"
-      //     },
-      //     {
-      //       name: "ตับ",
-      //       price: 10,
-      //       addMore: false,
-      //       amount: 2,
-      //       typeTopping: "toppingPork"
-      //     },
-      //     {
-      //       name: "ม้ามหมู",
-      //       price: 10,
-      //       addMore: false,
-      //       amount: 0,
-      //       typeTopping: "toppingPork"
-      //     }
-      //   ],
-      //   price: { typePrice: "ธรรมดา", price: 40 },
-      //   amountOrder: 2,
-      //   remarks: ["ไม่ผักบุ้ง", "ไม่งอก"]
-      // }
-    ],
+    orders: [],
     orderDetail: {
       provider: "ร้านโกเอ",
       typeOrder: "ใส่ถุง",
@@ -61,14 +45,14 @@ const OrderPage: React.FC = () => {
     }
   };
 
-  const addData = () => {
+  const addData = payload => {
     firebase.db
       .collection("orders")
-      .add({
-        name: "เส้นเล็กน้ำ"
-      })
+      .add(payload)
       .then(function() {
-        console.log("Document successfully written!");
+        setOpenBackDrop(false);
+        setOpenSnackBar(true);
+        window.scrollTo({ top: 0, behavior: "smooth" });
       })
       .catch(function(error) {
         console.error("Error writing document: ", error);
@@ -80,27 +64,69 @@ const OrderPage: React.FC = () => {
   //     const orders = [];
 
   //     querySnapshot.forEach(doc => {
-  //       orders.push(doc.data().name);
+  //       orders.push(doc.data());
   //     });
-  //     // console.log(orders, "xxx");
   //     // console.log("Current data: ", result?.data());
   //   });
   // };
 
-  const handleSubmit = (value, action) => {
-    console.log(action, "xx");
+  const handleSubmit = (value, { resetForm }) => {
+    const payload = {
+      tableNo: value.tableNo,
+      queueNo: value.queueNo,
+      orders: value.orders
+    };
+
+    setOpenBackDrop(true);
+    addData(payload);
+    resetForm();
+  };
+
+  const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpenSnackBar(false);
   };
 
   return (
-    <Formik
-      enableReinitialize
-      initialValues={initialValues}
-      onSubmit={handleSubmit}
-    >
-      {({ handleSubmit }) => {
-        return <Order handleSubmit={handleSubmit} />;
-      }}
-    </Formik>
+    <>
+      <Backdrop
+        className={classes.backdrop}
+        open={openBackDrop}
+        onClick={handleClose}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+      <Snackbar
+        open={openSnackBar}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        message="สั่งออเดอร์สำเร็จ"
+        action={
+          <React.Fragment>
+            <IconButton
+              size="small"
+              aria-label="close"
+              color="inherit"
+              onClick={handleClose}
+            >
+              <CloseIcon fontSize="small" />
+            </IconButton>
+          </React.Fragment>
+        }
+      />
+      <Formik
+        enableReinitialize
+        initialValues={initialValues}
+        onSubmit={handleSubmit}
+      >
+        {({ handleSubmit }) => {
+          return <Order handleSubmit={handleSubmit} />;
+        }}
+      </Formik>
+    </>
   );
 };
 
