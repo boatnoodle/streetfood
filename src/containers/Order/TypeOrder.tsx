@@ -23,7 +23,7 @@ const TypeOrder = ({ typeOrders }) => {
   const handleChange = e => {
     const name = e.currentTarget.name;
 
-    setFieldValue("typeOrder", name);
+    setFieldValue("orderDetail.typeOrder", name);
   };
 
   return (
@@ -35,7 +35,7 @@ const TypeOrder = ({ typeOrders }) => {
               <RadioGroup
                 aria-label="typeOrder"
                 name="typeOrder"
-                value={values.typeOrder}
+                value={values.orderDetail.typeOrder}
                 onChange={handleChange}
               >
                 <FormControlLabel

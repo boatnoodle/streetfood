@@ -39,7 +39,12 @@ const ActionButton = ({
   handleAddOrder
 }) => {
   const classes = useStyles();
-  const { values } = useFormikContext<any>();
+  const { values, resetForm } = useFormikContext<any>();
+
+  const handleResetForm = () => {
+    resetForm();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <AppBar position="fixed" color="primary" className={classes.root}>
@@ -55,7 +60,7 @@ const ActionButton = ({
       <Button variant="contained" color="secondary" onClick={handleAddOrder}>
         เพิ่ม
       </Button>
-      <Button variant="contained" color="secondary">
+      <Button variant="contained" color="secondary" onClick={handleResetForm}>
         เคลีย
       </Button>
       <Button variant="contained" color="secondary">

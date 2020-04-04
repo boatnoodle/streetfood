@@ -9,10 +9,44 @@ const OrderPage: React.FC = () => {
     tableNo: null,
     queueNo: 1,
     provider: "ร้านโกเอ",
-    typeMenu: "ก๋วยเตี๋ยว",
-    typeOrder: "ใส่ถุง",
-    orders: [],
+    orders: [
+      // {
+      //   typeMenu: "ก๋วยเตี๋ยว",
+      //   typeNoodle: "เรือ",
+      //   noodle: "หมี่",
+      //   allToppingPork: false,
+      //   allToppingBeef: false,
+      //   topping: [
+      //     {
+      //       name: "ลูกชิ้นหมู",
+      //       price: 10,
+      //       addMore: false,
+      //       amount: 0,
+      //       typeTopping: "toppingPork"
+      //     },
+      //     {
+      //       name: "ตับ",
+      //       price: 10,
+      //       addMore: false,
+      //       amount: 2,
+      //       typeTopping: "toppingPork"
+      //     },
+      //     {
+      //       name: "ม้ามหมู",
+      //       price: 10,
+      //       addMore: false,
+      //       amount: 0,
+      //       typeTopping: "toppingPork"
+      //     }
+      //   ],
+      //   price: { typePrice: "ธรรมดา", price: 40 },
+      //   amountOrder: 2,
+      //   remarks: ["ไม่ผักบุ้ง", "ไม่งอก"]
+      // }
+    ],
     orderDetail: {
+      typeOrder: "ใส่ถุง",
+      typeMenu: "ก๋วยเตี๋ยว",
       typeNoodle: "เรือ",
       noodle: "",
       allToppingPork: false,

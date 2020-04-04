@@ -8,7 +8,7 @@ const TypeMenu = ({ typeMenus, value }) => {
   const { setFieldValue } = useFormikContext();
 
   const handleOnClick = value => {
-    setFieldValue("typeMenu", value);
+    setFieldValue("orderDetail.typeMenu", value);
   };
 
   return (

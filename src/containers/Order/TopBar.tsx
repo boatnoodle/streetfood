@@ -40,21 +40,25 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const TopBar = ({ setOpenDialogRemark }) => {
+const TopBar = ({ setOpenDialogRemark, setOpenDialogOrderList }) => {
   const { values, setFieldValue } = useFormikContext<any>();
   const classes = useStyles();
+
   const handleAmountOrder = value => {
     setFieldValue("orderDetail.amountOrder", value);
   };
 
   return (
     <AppBar position="fixed" color="primary" className={classes.root}>
-      <Button variant="contained" color="secondary">
+      <Button
+        variant="contained"
+        color="secondary"
+        onClick={setOpenDialogOrderList}
+      >
         <Badge badgeContent={values.orders.length} color="secondary">
           <ListAltIcon />
         </Badge>
       </Button>
-
       <Button
         variant="contained"
         color="secondary"

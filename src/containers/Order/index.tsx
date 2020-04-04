@@ -22,6 +22,7 @@ import AmountOrder from "containers/Order/AmountOrder";
 import Remark from "containers/Order/Remark";
 import ActionBar from "containers/Order/ActionBar";
 import TopBar from "containers/Order/TopBar";
+import OrderList from "containers/Order/components/OrderList/OrderList";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -82,6 +83,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const Order = ({ handleSubmit }) => {
   const [openAmountOrder, setOpenAmountOrder] = useState(false);
   const [openDialogRemark, setOpenDialogRemark] = useState(false);
+  const [openDialogOrderList, setOpenDialogOrderList] = useState(false);
   const classes = useStyles();
   const { values, setFieldValue, initialValues } = useFormikContext<any>();
 
@@ -91,26 +93,25 @@ const Order = ({ handleSubmit }) => {
     setFieldValue("orders", [...orders, order]);
     setFieldValue("orderDetail", initialValues.orderDetail);
     setFieldValue("provider", initialValues.provider);
-    setFieldValue("typeMenu", initialValues.typeMenu);
-    setFieldValue("typeOrder", initialValues.typeOrder);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  console.log(values.orders, "orders");
-
   return (
     <div className={classes.root}>
-      <TopBar setOpenDialogRemark={setOpenDialogRemark} />
+      <TopBar
+        setOpenDialogRemark={setOpenDialogRemark}
+        setOpenDialogOrderList={setOpenDialogOrderList}
+      />
       <Field name="provider">
         {({ field }) => <Provider providers={providers} {...field} />}
       </Field>
-      <Field name="typeOrder">
+      <Field name="orderDetail.typeOrder">
         {({ field }) => <TypeOrder typeOrders={typeOrders} {...field} />}
       </Field>
       <div>
         <hr />
       </div>
-      <Field name="typeMenu">
+      <Field name="orderDetail.typeMenu">
         {({ field }) => <TypeMenu typeMenus={typeMenus} {...field} />}
       </Field>
       <Field name="orderDetail.typeNoodle">
@@ -141,6 +142,10 @@ const Order = ({ handleSubmit }) => {
         openDialogRemark={openDialogRemark}
         setOpenDialogRemark={setOpenDialogRemark}
         presetRemarks={presetRemarks}
+      />
+      <OrderList
+        openDialogOrderList={openDialogOrderList}
+        setOpenDialogOrderList={setOpenDialogOrderList}
       />
       <ActionBar
         openAmountOrder={openAmountOrder}
