@@ -61,6 +61,14 @@ const useStyles = makeStyles((theme: Theme) =>
           fontSize: "0.7rem"
         }
       }
+    },
+    noOrder: {
+      display: "grid",
+      width: "100%",
+      alignItems: "center",
+      justifyContent: "center",
+      minHeight: "100vh",
+      marginTop: "-50px"
     }
   })
 );
@@ -91,99 +99,107 @@ const OrderListItem = () => {
   return (
     <div className={classes.root}>
       <Grid container>
-        {values.orders.map((item, index) => {
-          return (
-            <Fragment key={index}>
-              <Grid item xs={12}>
-                <span className={classes.text}>No. {index + 1} </span>
-                <Chip label={item.typeOrder} color="secondary" />{" "}
-                <Chip label={item.provider} color="primary" />
-              </Grid>
-              <Grid item xs={10}>
-                {/* เส้น */}
-                <Grid item xs={12} className={classes.topSpace}>
-                  <div className={classes.text}>
-                    {`${item.typeMenu} ${item.typeNoodle} ${item.noodle} `}
-                    <span className={classes.typePrice}>
-                      {item.price.typePrice}
-                    </span>
-                  </div>
-                </Grid>
-                {/* Toppping */}
+        {values.orders.length > 0 ? (
+          values.orders.map((item, index) => {
+            return (
+              <Fragment key={index}>
                 <Grid item xs={12}>
-                  <div className={classes.toppingList}>
-                    {item.allToppingPork || item.allToppingBeef ? (
-                      <Fragment>
-                        <div>{item.allToppingPork ? "รวมหมู" : "รวมเนื้อ"}</div>
-                        {item.topping.map(topping => {
-                          if (topping.amount > 0)
-                            return (
-                              <Grid item>
-                                {topping.name}{" "}
-                                {topping.amount > 0 &&
-                                  `x ${topping.amount * item.amountOrder}`}
-                              </Grid>
-                            );
-                        })}
-                      </Fragment>
-                    ) : (
-                      item.topping
-                        .sort(sortTopping)
-                        .map((topping, toppingIndex) => (
-                          <Grid item key={toppingIndex}>
-                            {topping.name}{" "}
-                            {topping.amount > 0 &&
-                              `x ${topping.amount * item.amountOrder}`}
-                          </Grid>
-                        ))
-                    )}
-                  </div>
+                  <span className={classes.text}>No. {index + 1} </span>
+                  <Chip label={item.typeOrder} color="secondary" />{" "}
+                  <Chip label={item.provider} color="primary" />
                 </Grid>
-                {/* หมายเหตุ */}
-                {item.remarks.length > 0 && (
-                  <Grid item xs={12}>
-                    <div className={classes.remarks}>
-                      หมายเหตุ :{" "}
-                      {item.remarks.map((remark, index) => {
-                        return index !== item.remarks?.length - 1
-                          ? `${remark}, `
-                          : remark;
-                      })}
+                <Grid item xs={10}>
+                  {/* เส้น */}
+                  <Grid item xs={12} className={classes.topSpace}>
+                    <div className={classes.text}>
+                      {`${item.typeMenu} ${item.typeNoodle} ${item.noodle} `}
+                      <span className={classes.typePrice}>
+                        {item.price.typePrice}
+                      </span>
                     </div>
                   </Grid>
-                )}
-              </Grid>
-              <Grid item xs={2}>
-                <div className={classes.amountOrder}>x {item.amountOrder}</div>
-              </Grid>
-              {/* // ลบ */}
-              <Grid item xs={12}>
-                <div className={classes.btnDelete}>
-                  <ConfirmDialog
-                    textTitle="ยืนยันการลบออเดอร์"
-                    textContent="คุณยืนยันที่จะลบออเดอร์นี้หรือไม่ ?"
-                    textConfirm="ยืนยัน"
-                    textClose="ยกเลิก"
-                    openConfirmDialog={openConfirmDialog}
-                    setOpenConfirmDialog={setOpenConfirmDialog}
-                    handleOnEnter={handleDeleteOrder}
-                  />
-                  <Button
-                    size="small"
-                    variant="contained"
-                    color="secondary"
-                    onClick={() => toggleDialog(index)}
-                  >
-                    ลบ
-                  </Button>
-                </div>
-              </Grid>
-              <Grid item xs={12}>
-                <hr />
-              </Grid>
-            </Fragment>
-          );
-        })}
+                  {/* Toppping */}
+                  <Grid item xs={12}>
+                    <div className={classes.toppingList}>
+                      {item.allToppingPork || item.allToppingBeef ? (
+                        <Fragment>
+                          <div>
+                            {item.allToppingPork ? "รวมหมู" : "รวมเนื้อ"}
+                          </div>
+                          {item.topping.map(topping => {
+                            if (topping.amount > 0)
+                              return (
+                                <Grid item>
+                                  {topping.name}{" "}
+                                  {topping.amount > 0 &&
+                                    `x ${topping.amount * item.amountOrder}`}
+                                </Grid>
+                              );
+                          })}
+                        </Fragment>
+                      ) : (
+                        item.topping
+                          .sort(sortTopping)
+                          .map((topping, toppingIndex) => (
+                            <Grid item key={toppingIndex}>
+                              {topping.name}{" "}
+                              {topping.amount > 0 &&
+                                `x ${topping.amount * item.amountOrder}`}
+                            </Grid>
+                          ))
+                      )}
+                    </div>
+                  </Grid>
+                  {/* หมายเหตุ */}
+                  {item.remarks.length > 0 && (
+                    <Grid item xs={12}>
+                      <div className={classes.remarks}>
+                        หมายเหตุ :{" "}
+                        {item.remarks.map((remark, index) => {
+                          return index !== item.remarks?.length - 1
+                            ? `${remark}, `
+                            : remark;
+                        })}
+                      </div>
+                    </Grid>
+                  )}
+                </Grid>
+                <Grid item xs={2}>
+                  <div className={classes.amountOrder}>
+                    x {item.amountOrder}
+                  </div>
+                </Grid>
+                {/* // ลบ */}
+                <Grid item xs={12}>
+                  <div className={classes.btnDelete}>
+                    <ConfirmDialog
+                      textTitle="ยืนยันการลบออเดอร์"
+                      textContent="คุณยืนยันที่จะลบออเดอร์นี้หรือไม่ ?"
+                      textConfirm="ยืนยัน"
+                      textClose="ยกเลิก"
+                      openConfirmDialog={openConfirmDialog}
+                      setOpenConfirmDialog={setOpenConfirmDialog}
+                      handleOnEnter={handleDeleteOrder}
+                    />
+                    <Button
+                      size="small"
+                      variant="contained"
+                      color="secondary"
+                      onClick={() => toggleDialog(index)}
+                    >
+                      ลบ
+                    </Button>
+                  </div>
+                </Grid>
+                <Grid item xs={12}>
+                  <hr />
+                </Grid>
+              </Fragment>
+            );
+          })
+        ) : (
+          <div className={classes.noOrder}>ยังไม่มีออเดอร์</div>
+        )}
       </Grid>
     </div>
   );
