@@ -2,8 +2,7 @@ import React from "react";
 import Button from "@material-ui/core/Button";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
+import Badge from "@material-ui/core/Badge";
 import { useFormikContext } from "formik";
 import ListAltIcon from "@material-ui/icons/ListAlt";
 
@@ -41,7 +40,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const TopBar = () => {
+const TopBar = ({ setOpenDialogRemark }) => {
   const { values, setFieldValue } = useFormikContext<any>();
   const classes = useStyles();
   const handleAmountOrder = value => {
@@ -53,8 +52,19 @@ const TopBar = () => {
       <Button variant="contained" color="secondary">
         <ListAltIcon />
       </Button>
-      <Button variant="contained" color="secondary">
-        หมายเหตุ
+
+      <Button
+        variant="contained"
+        color="secondary"
+        onClick={() => setOpenDialogRemark(true)}
+      >
+        <Badge
+          badgeContent={values.orderDetail.remarks.length}
+          color="secondary"
+        >
+          {" "}
+          หมายเหตุ
+        </Badge>
       </Button>
       <Button variant="contained" color="secondary">
         คิวที่ 1

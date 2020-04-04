@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
-import Chip from "@material-ui/core/Chip";
 import { useFirebase } from "components/Firebase/useFirebase";
 import { Formik, Field } from "formik";
 import Provider from "containers/Order/Provider";
@@ -11,6 +9,7 @@ import OrderDetail from "containers/Order/OrderDetail";
 import TypeOrder from "containers/Order/TypeOrder";
 import TypePrice from "containers/Order/TypePrice";
 import AmountOrder from "containers/Order/AmountOrder";
+import Remark from "containers/Order/Remark";
 import ActionBar from "containers/Order/ActionBar";
 import TopBar from "containers/Order/TopBar";
 
@@ -52,7 +51,6 @@ const useStyles = makeStyles((theme: Theme) =>
       "& .MuiFormControlLabel-root": {
         marginRight: "5px"
       },
-      // position: "relative",
       flexGrow: 1,
       margin: "35px 0 60px 0",
       hr: {
@@ -85,6 +83,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const OrderPage: React.FC = () => {
   const [openAmountOrder, setOpenAmountOrder] = useState(false);
+  const [openDialogRemark, setOpenDialogRemark] = useState(false);
   const classes = useStyles();
   const firebase = useFirebase();
   const initialValues = {
@@ -149,7 +148,7 @@ const OrderPage: React.FC = () => {
       {({ handleSubmit, errors, values }) => {
         return (
           <div className={classes.root}>
-            <TopBar />
+            <TopBar setOpenDialogRemark={setOpenDialogRemark} />
             <Field name="provider">
               {({ field }) => <Provider providers={providers} {...field} />}
             </Field>
@@ -188,24 +187,11 @@ const OrderPage: React.FC = () => {
               )}
             </Field>
             <TypePrice />
-            {/* <Field name="typeOrder">
-              {({ field }) => (
-                <Grid
-                  container
-                  alignItems="center"
-                  className={classes.rowSpace}
-                >
-                  <Grid item>
-                    <TypeOrder typeOrders={typeOrders} {...field} />
-                  </Grid>
-                  <Grid item>
-                    <Remark presetRemarks={presetRemarks} />
-                  </Grid>
-                  <Grid item xs>
-                  </Grid>
-                </Grid>
-              )}
-            </Field> */}
+            <Remark
+              openDialogRemark={openDialogRemark}
+              setOpenDialogRemark={setOpenDialogRemark}
+              presetRemarks={presetRemarks}
+            />
             <ActionBar setOpenAmountOrder={setOpenAmountOrder} />
           </div>
         );

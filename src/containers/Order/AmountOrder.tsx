@@ -17,15 +17,15 @@ import MenuList from "@material-ui/core/MenuList";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      top: "-90px !important",
-      left: "-50px !important",
+      top: "45px !important",
+      left: "0px !important",
       maxHeight: "80vh",
       overflowY: "auto",
       width: "150px",
       zIndex: 999,
       position: "fixed !important " as any,
       "& .MuiList-root": {
-        background: "#20a08a",
+        background: "#2778d0",
         color: "white"
       }
     }
@@ -34,14 +34,10 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const AmountOrder = ({ openAmountOrder, setOpenAmountOrder }) => {
   const classes = useStyles();
-  const { values, setFieldValue } = useFormikContext<any>();
   const [open, setOpen] = useState(false);
+  const { values, setFieldValue } = useFormikContext<any>();
 
   const anchorRef = useRef<HTMLButtonElement>(null);
-
-  const handleToggle = () => {
-    setOpen(prevOpen => !prevOpen);
-  };
 
   const handleClose = (event: React.MouseEvent<EventTarget>) => {
     if (
@@ -55,12 +51,13 @@ const AmountOrder = ({ openAmountOrder, setOpenAmountOrder }) => {
     setOpenAmountOrder(false);
   };
 
-  function handleListKeyDown(event: React.KeyboardEvent) {
+  const handleListKeyDown = (event: React.KeyboardEvent) => {
     if (event.key === "Tab") {
       event.preventDefault();
       setOpen(false);
     }
-  }
+  };
+
   const handleAmountOrder = value => {
     setFieldValue("orderDetail.amountOrder", value);
   };
@@ -70,48 +67,38 @@ const AmountOrder = ({ openAmountOrder, setOpenAmountOrder }) => {
   }, [openAmountOrder]);
 
   return (
-    <>
-      <Button
-        ref={anchorRef}
-        aria-controls={open ? "menu-list-grow" : undefined}
-        aria-haspopup="true"
-        onClick={handleToggle}
-      >
-        Toggle Menu Grow
-      </Button>
-      <Popper
-        className={classes.root}
-        open={open}
-        anchorEl={anchorRef.current}
-        role={undefined}
-        transition
-        disablePortal
-      >
-        {({ TransitionProps, placement }) => (
-          <Grow
-            {...TransitionProps}
-            style={{
-              transformOrigin:
-                placement === "bottom" ? "center top" : "center bottom"
-            }}
-          >
-            <Paper>
-              <ClickAwayListener onClickAway={handleClose}>
-                <MenuList
-                  autoFocusItem={open}
-                  id="menu-list-grow"
-                  onKeyDown={handleListKeyDown}
-                >
-                  {[...Array(20).keys()].map(i => (
-                    <MenuItem>{i + 1}</MenuItem>
-                  ))}
-                </MenuList>
-              </ClickAwayListener>
-            </Paper>
-          </Grow>
-        )}
-      </Popper>
-    </>
+    <Popper
+      className={classes.root}
+      open={open}
+      anchorEl={anchorRef.current}
+      role={undefined}
+      transition
+      disablePortal
+    >
+      {({ TransitionProps, placement }) => (
+        <Grow
+          {...TransitionProps}
+          style={{
+            transformOrigin:
+              placement === "bottom" ? "center top" : "center bottom"
+          }}
+        >
+          <Paper>
+            <ClickAwayListener onClickAway={handleClose}>
+              <MenuList
+                autoFocusItem={open}
+                id="menu-list-grow"
+                onKeyDown={handleListKeyDown}
+              >
+                {[...Array(20).keys()].map(i => (
+                  <MenuItem>{i + 1}</MenuItem>
+                ))}
+              </MenuList>
+            </ClickAwayListener>
+          </Paper>
+        </Grow>
+      )}
+    </Popper>
   );
 };
 

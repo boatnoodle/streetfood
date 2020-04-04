@@ -42,7 +42,7 @@ const TypePrice = () => {
     priceSpecial: 0
   });
   const myShop = "ร้านโกเอ";
-  const panda = "FOOD PANDA";
+  const panda = "PANDA";
   const normalPrice = "ธรรมดา";
   const specialPrice = "พิเศษ";
 
@@ -140,9 +140,9 @@ const TypePrice = () => {
       informationPrice.labelSpecial = "พิเศษ";
       informationPrice.priceSpecial = 50;
     } else if (provider === panda) {
-      informationPrice.labelNormal = "ธรรมดา Panda";
+      informationPrice.labelNormal = "Panda ธด.";
       informationPrice.priceNormal = 50;
-      informationPrice.labelSpecial = "พิเศษ Panda";
+      informationPrice.labelSpecial = "Panda พศ.";
       informationPrice.priceSpecial = 60;
     }
 
