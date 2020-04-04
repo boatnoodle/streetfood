@@ -68,6 +68,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const OrderLists: React.FC<any> = ({ datas }) => {
+  console.log(datas, " datas");
   const classes = useStyles();
 
   const sortTopping = (a, b) => {

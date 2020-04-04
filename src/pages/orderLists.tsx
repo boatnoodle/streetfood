@@ -7,14 +7,17 @@ const OrderListsPage: React.FC = () => {
   const firebase = useFirebase();
 
   const listenOrders = () => {
-    firebase.db.collection("orders").onSnapshot(function(querySnapshot) {
-      const orders = [];
+    firebase.db
+      .collection("orders")
+      .orderBy("created")
+      .onSnapshot(function(querySnapshot) {
+        const orders = [];
 
-      querySnapshot.forEach(doc => {
-        orders.push(doc.data());
+        querySnapshot.forEach(doc => {
+          orders.push(doc.data());
+        });
+        setDatas(orders);
       });
-      setDatas(orders);
-    });
   };
 
   useEffect(() => {

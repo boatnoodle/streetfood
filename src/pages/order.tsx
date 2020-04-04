@@ -8,6 +8,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
+import firebaseGlobal from "firebase";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -60,10 +61,17 @@ const OrderPage: React.FC = () => {
   };
 
   const handleSubmit = (value, { resetForm }) => {
+    let orders = value.orders;
+    const orderDetail = value.orderDetail;
+
+    if (orders.length === 0) {
+      orders = [orderDetail];
+    }
     const payload = {
       tableNo: value.tableNo,
       queueNo: value.queueNo,
-      orders: value.orders
+      orders: orders,
+      created: firebaseGlobal.firestore.FieldValue.serverTimestamp()
     };
 
     setOpenBackDrop(true);
