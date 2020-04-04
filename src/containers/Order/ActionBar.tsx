@@ -2,6 +2,8 @@ import React from "react";
 import Button from "@material-ui/core/Button";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
+import Badge from "@material-ui/core/Badge";
+import { useFormikContext } from "formik";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -31,17 +33,20 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const ActionButton = ({ setOpenAmountOrder }) => {
+const ActionButton = ({ openAmountOrder, setOpenAmountOrder }) => {
   const classes = useStyles();
+  const { values } = useFormikContext<any>();
 
   return (
     <AppBar position="fixed" color="primary" className={classes.root}>
       <Button
         variant="contained"
         color="secondary"
-        onClick={() => setOpenAmountOrder(true)}
+        onClick={() => setOpenAmountOrder(!openAmountOrder)}
       >
-        จำนวน
+        <Badge badgeContent={values.orderDetail.amountOrder} color="secondary">
+          จำนวน
+        </Badge>
       </Button>
       <Button variant="contained" color="secondary">
         เพิ่ม

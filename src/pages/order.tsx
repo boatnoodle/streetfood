@@ -133,7 +133,6 @@ const OrderPage: React.FC = () => {
   //     // console.log("Current data: ", result?.data());
   //   });
   // };
-  console.log(openAmountOrder, "xx");
 
   const handleSubmit = () => {
     console.log("handleSubmit");
@@ -192,7 +191,10 @@ const OrderPage: React.FC = () => {
               setOpenDialogRemark={setOpenDialogRemark}
               presetRemarks={presetRemarks}
             />
-            <ActionBar setOpenAmountOrder={setOpenAmountOrder} />
+            <ActionBar
+              openAmountOrder={openAmountOrder}
+              setOpenAmountOrder={setOpenAmountOrder}
+            />
           </div>
         );
       }}

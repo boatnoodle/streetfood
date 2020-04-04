@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
       zIndex: 999,
       position: "fixed !important " as any,
       "& .MuiList-root": {
-        background: "#2778d0",
+        background: "#21a08a",
         color: "white"
       }
     }
@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const AmountOrder = ({ openAmountOrder, setOpenAmountOrder }) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  const { values, setFieldValue } = useFormikContext<any>();
+  const { setFieldValue } = useFormikContext<any>();
 
   const anchorRef = useRef<HTMLButtonElement>(null);
 
@@ -60,6 +60,8 @@ const AmountOrder = ({ openAmountOrder, setOpenAmountOrder }) => {
 
   const handleAmountOrder = value => {
     setFieldValue("orderDetail.amountOrder", value);
+    setOpen(false);
+    setOpenAmountOrder(false);
   };
 
   useEffect(() => {
@@ -91,7 +93,9 @@ const AmountOrder = ({ openAmountOrder, setOpenAmountOrder }) => {
                 onKeyDown={handleListKeyDown}
               >
                 {[...Array(20).keys()].map(i => (
-                  <MenuItem>{i + 1}</MenuItem>
+                  <MenuItem onClick={() => handleAmountOrder(i + 1)}>
+                    {i + 1}
+                  </MenuItem>
                 ))}
               </MenuList>
             </ClickAwayListener>

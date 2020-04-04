@@ -62,7 +62,6 @@ const TopBar = ({ setOpenDialogRemark }) => {
           badgeContent={values.orderDetail.remarks.length}
           color="secondary"
         >
-          {" "}
           หมายเหตุ
         </Badge>
       </Button>

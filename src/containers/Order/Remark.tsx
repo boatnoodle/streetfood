@@ -130,6 +130,10 @@ const Remark = ({ openDialogRemark, setOpenDialogRemark, presetRemarks }) => {
     }
   };
 
+  const resetValue = () => {
+    setFieldValue("orderDetail.remarks", []);
+  };
+
   useEffect(() => {
     setOpen(openDialogRemark);
   }, [openDialogRemark]);
@@ -171,6 +175,9 @@ const Remark = ({ openDialogRemark, setOpenDialogRemark, presetRemarks }) => {
         </Grid>
       </DialogContent>
       <DialogActions>
+        <Button onClick={resetValue} color="secondary">
+          ล้างค่า
+        </Button>
         <Button autoFocus onClick={handleClose} color="primary">
           ตกลง
         </Button>
