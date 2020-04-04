@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useFirebase } from "components/Firebase/useFirebase";
 import { Formik } from "formik";
 import Order from "containers/Order";
@@ -58,17 +58,6 @@ const OrderPage: React.FC = () => {
         console.error("Error writing document: ", error);
       });
   };
-
-  // const listenOrders = () => {
-  //   firebase.db.collection("orders").onSnapshot(function(querySnapshot) {
-  //     const orders = [];
-
-  //     querySnapshot.forEach(doc => {
-  //       orders.push(doc.data());
-  //     });
-  //     // console.log("Current data: ", result?.data());
-  //   });
-  // };
 
   const handleSubmit = (value, { resetForm }) => {
     const payload = {

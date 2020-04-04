@@ -1,9 +1,4 @@
 import React, { Fragment, useState } from "react";
-import List from "@material-ui/core/List";
-import ListItem, { ListItemProps } from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import FastfoodIcon from "@material-ui/icons/Fastfood";
 import { useFormikContext } from "formik";
 import Chip from "@material-ui/core/Chip";
 import Grid, { GridSpacing } from "@material-ui/core/Grid";
@@ -73,9 +68,9 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 const OrderListItem = () => {
+  const classes = useStyles();
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const [targetDelete, setTargetDelete] = useState();
-  const classes = useStyles();
   const { values, setFieldValue } = useFormikContext<any>();
 
   const sortTopping = (a, b) => {

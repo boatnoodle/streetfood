@@ -5,21 +5,46 @@ import { Firebase, FirebaseContext } from "components/Firebase/";
 
 import client from "./client";
 import OrderPage from "pages/order";
+import OrderListsPage from "pages/orderLists";
 import NotFoundPage from "pages/not-found";
 import Layout from "components/Layout";
+import LayoutWithoutHeading from "components/Layout/withOutHeading";
 import GlobalStyle from "global-styles";
+
+const PublicRoute = ({ component: Component, ...rest }) => {
+  return (
+    <Route
+      {...rest}
+      render={props =>
+        rest.useLayout ? (
+          <LayoutWithoutHeading>
+            <Component {...props} />
+          </LayoutWithoutHeading>
+        ) : (
+          <Layout>
+            <Component {...props} />
+          </Layout>
+        )
+      }
+    />
+  );
+};
 
 function App() {
   return (
     <FirebaseContext.Provider value={new Firebase()}>
       <ApolloProvider client={client}>
-        <Layout>
-          <Switch>
-            <Route exact path="/" component={OrderPage} />
-            <Route path="" component={NotFoundPage} />
-          </Switch>
-          <GlobalStyle />
-        </Layout>
+        <Switch>
+          <PublicRoute exact path="/" component={OrderPage} useLayout={true} />
+          <PublicRoute
+            exact
+            path="/order-lists"
+            component={OrderListsPage}
+            useLayout={false}
+          />
+          <PublicRoute path="" component={NotFoundPage} useLayout={true} />
+        </Switch>
+        <GlobalStyle />
       </ApolloProvider>
     </FirebaseContext.Provider>
   );
