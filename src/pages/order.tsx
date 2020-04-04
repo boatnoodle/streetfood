@@ -8,7 +8,6 @@ const OrderPage: React.FC = () => {
   const initialValues = {
     tableNo: null,
     queueNo: 1,
-    provider: "ร้านโกเอ",
     orders: [
       // {
       //   typeMenu: "ก๋วยเตี๋ยว",
@@ -45,6 +44,7 @@ const OrderPage: React.FC = () => {
       // }
     ],
     orderDetail: {
+      provider: "ร้านโกเอ",
       typeOrder: "ใส่ถุง",
       typeMenu: "ก๋วยเตี๋ยว",
       typeNoodle: "เรือ",

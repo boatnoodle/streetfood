@@ -92,7 +92,6 @@ const Order = ({ handleSubmit }) => {
     const order = values.orderDetail;
     setFieldValue("orders", [...orders, order]);
     setFieldValue("orderDetail", initialValues.orderDetail);
-    setFieldValue("provider", initialValues.provider);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -102,7 +101,7 @@ const Order = ({ handleSubmit }) => {
         setOpenDialogRemark={setOpenDialogRemark}
         setOpenDialogOrderList={setOpenDialogOrderList}
       />
-      <Field name="provider">
+      <Field name="orderDetail.provider">
         {({ field }) => <Provider providers={providers} {...field} />}
       </Field>
       <Field name="orderDetail.typeOrder">

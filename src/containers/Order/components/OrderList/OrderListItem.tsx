@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import List from "@material-ui/core/List";
 import ListItem, { ListItemProps } from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
@@ -7,6 +7,7 @@ import FastfoodIcon from "@material-ui/icons/Fastfood";
 import { useFormikContext } from "formik";
 import Chip from "@material-ui/core/Chip";
 import Grid, { GridSpacing } from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
 import {
   createStyles,
   Theme,
@@ -14,12 +15,12 @@ import {
   WithStyles,
   makeStyles
 } from "@material-ui/core/styles";
+import ConfirmDialog from "components/ConfirmDialog";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       padding: "0 10px",
-      background: "beige",
       minHeight: "100vh",
       marginTop: "55px",
       "& .MuiChip-root": {
@@ -51,50 +52,42 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: "10px",
       fontSize: "0.7rem",
       color: "#f50057"
+    },
+    btnDelete: {
+      textAlign: "right",
+      "& .MuiButton-containedSizeSmall": {
+        padding: "0",
+        "& .MuiButton-label": {
+          fontSize: "0.7rem"
+        }
+      }
     }
   })
 );
 const OrderListItem = () => {
+  const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
+  const [targetDelete, setTargetDelete] = useState();
   const classes = useStyles();
-  // provider: "ร้านโกเอ",
-  //   typeMenu: "ก๋วยเตี๋ยว",
-  //   typeOrder: "ใส่ถุง",
-  //   orders: [],
-  //   orderDetail: {
-  //     typeNoodle: "เรือ",
-  //     noodle: "",
-  //     allToppingPork: false,
-  //     allToppingBeef: false,
-  //     topping: [],
-  //     price: {
-  //       typePrice: "ธรรมดา",
-  //       price: 40
-  //     },
-  //     amountOrder: 1,
-  //     remarks: []
-  //   }
+  const { values, setFieldValue } = useFormikContext<any>();
 
-  // typeNoodle: "เรือ"
-  // noodle: "หมี่"
-  // allToppingPork: false
-  // allToppingBeef: false
-  // topping: Array(3)
-  // 0: {name: "ลูกชิ้นหมู", price: 10, addMore: false, amount: 0, typeTopping: "toppingPork"}
-  // 1: {name: "ตับ", price: 10, addMore: false, amount: 2, typeTopping: "toppingPork"}
-  // 2: {name: "ม้ามหมู", price: 10, addMore: false, amount: 0, typeTopping: "toppingPork"}
-  // length: 3
-  // __proto__: Array(0)
-  // price: {typePrice: "ธรรมดา", price: 40}
-  // amountOrder: 1
-  // remarks: (2) ["ไม่ผักบุ้ง", "ไม่งอก"]
   const sortTopping = (a, b) => {
     if (a.amount > b.amount) return 1;
     if (b.amount > a.amount) return -1;
 
     return 0;
   };
-  const { values, setFieldValue } = useFormikContext<any>();
-  console.log(values, "xx");
+
+  const toggleDialog = index => {
+    setOpenConfirmDialog(!openConfirmDialog);
+    setTargetDelete(index);
+  };
+
+  const handleDeleteOrder = value => {
+    const orders = values.orders.filter((_, index) => index !== targetDelete);
+    setFieldValue("orders", orders);
+    setOpenConfirmDialog(!openConfirmDialog);
+  };
+
   return (
     <div className={classes.root}>
       <Grid container>
@@ -103,7 +96,8 @@ const OrderListItem = () => {
             <Fragment key={index}>
               <Grid item xs={12}>
                 <span className={classes.text}>No. {index + 1} </span>
-                <Chip label={item.typeOrder} color="secondary" />
+                <Chip label={item.typeOrder} color="secondary" />{" "}
+                <Chip label={item.provider} color="primary" />
               </Grid>
               <Grid item xs={10}>
                 {/* เส้น */}
@@ -161,6 +155,28 @@ const OrderListItem = () => {
               </Grid>
               <Grid item xs={2}>
                 <div className={classes.amountOrder}>x {item.amountOrder}</div>
+              </Grid>
+              {/* // ลบ */}
+              <Grid item xs={12}>
+                <div className={classes.btnDelete}>
+                  <ConfirmDialog
+                    textTitle="ยืนยันการลบออเดอร์"
+                    textContent="คุณยืนยันที่จะลบออเดอร์นี้หรือไม่ ?"
+                    textConfirm="ยืนยัน"
+                    textClose="ยกเลิก"
+                    openConfirmDialog={openConfirmDialog}
+                    setOpenConfirmDialog={setOpenConfirmDialog}
+                    handleOnEnter={handleDeleteOrder}
+                  />
+                  <Button
+                    size="small"
+                    variant="contained"
+                    color="secondary"
+                    onClick={() => toggleDialog(index)}
+                  >
+                    ลบ
+                  </Button>
+                </div>
               </Grid>
               <Grid item xs={12}>
                 <hr />

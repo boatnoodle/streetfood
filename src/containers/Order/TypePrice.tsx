@@ -97,7 +97,6 @@ const TypePrice = () => {
       }
 
       let latestPrice;
-      console.log(values.orderDetail.price.price, minPrice);
       if (typePrice === normalPrice) {
         latestPrice = informationPrice.priceNormal - 10;
 
@@ -122,10 +121,10 @@ const TypePrice = () => {
 
   useEffect(() => {
     getPriceFromProvider();
-  }, [values.provider]);
+  }, [values.orderDetail.provider]);
 
   const getPriceFromProvider = () => {
-    const provider = values.provider;
+    const provider = values.orderDetail.provider;
     const typePrice = values.orderDetail.price.typePrice;
     const informationPrice = {
       labelNormal: null,

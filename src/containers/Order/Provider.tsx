@@ -22,7 +22,7 @@ const Provider = ({ providers, value, onChange }) => {
   const { setFieldValue } = useFormikContext();
 
   const handleChange = e => {
-    setFieldValue("provider", e.currentTarget.name);
+    setFieldValue("orderDetail.provider", e.currentTarget.name);
   };
 
   return (
