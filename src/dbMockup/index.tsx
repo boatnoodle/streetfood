@@ -45,13 +45,16 @@ export const typeNoodles = [
     name: "น้ำตก"
   },
   {
-    name: "ต้มยำหมูสับ"
+    name: "ย.หมูสับ"
+  },
+  {
+    name: "ย.น้ำตก"
   }
 ];
 
 export const noodles = [
   {
-    name: "หมี่ขาว"
+    name: "หมี่"
   },
   {
     name: "เล็ก"

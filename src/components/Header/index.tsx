@@ -26,7 +26,7 @@ const Header = () => {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Toolbar>
           <IconButton
             edge="start"
@@ -39,7 +39,6 @@ const Header = () => {
           <Typography variant="h6" className={classes.title}>
             StreetFood
           </Typography>
-          <Button color="inherit">Login</Button>
         </Toolbar>
       </AppBar>
     </div>

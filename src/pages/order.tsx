@@ -9,10 +9,11 @@ import TypeMenu from "containers/Order/TypeMenu";
 import TypeNoodle from "containers/Order/TypeNoodle";
 import OrderDetail from "containers/Order/OrderDetail";
 import TypeOrder from "containers/Order/TypeOrder";
-import AmountOrder from "containers/Order/AmountOrder";
-import Remark from "containers/Order/Remark";
 import TypePrice from "containers/Order/TypePrice";
-import ActionButton from "containers/Order/ActionButton";
+import ActionBar from "containers/Order/ActionBar";
+import Button from "@material-ui/core/Button";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
+
 import {
   typeMenus,
   typeOrders,
@@ -27,27 +28,57 @@ import {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      position: "relative",
-      margin: "20px 0",
+      "& .PrivateSwitchBase-input-181, & .PrivateSwitchBase-root-178": {
+        padding: "0 4px"
+      },
+      "& .MuiGrid-spacing-xs-2 > .MuiGrid-item": {
+        padding: "0px 4px"
+      },
+      "& .MuiTypography-body1": {
+        fontSize: "0.8rem",
+        whiteSpace: "nowrap"
+      },
+      "& .MuiSvgIcon-root": {
+        width: "0.7em",
+        height: "0.7em"
+      },
+      "& .MuiChip-label": {
+        fontSize: "0.7rem"
+      },
       "& .MuiTextField-root": {
         margin: theme.spacing(1),
         width: "25ch"
       },
-      flexGrow: 1
+      "& .MuiFormControlLabel-root": {
+        marginRight: "5px"
+      },
+      // position: "relative",
+      flexGrow: 1,
+      marginTop: "50px",
+      hr: {
+        margin: "10px 0"
+      }
     },
     margin: {
       margin: theme.spacing(1)
     },
     rowSpace: {
-      margin: "20px 0"
+      margin: "10px 0"
     },
     topSpace: {
-      marginTop: "20px"
+      marginTop: "10px"
     },
     queueNumber: {
-      position: "absolute",
+      zIndex: 9999,
+      position: "fixed",
       top: "0",
-      right: "0"
+      right: "10px"
+    },
+    orderButton: {
+      zIndex: 9999,
+      position: "fixed",
+      top: "6px",
+      left: "20%"
     }
   })
 );
@@ -91,29 +122,21 @@ const OrderPage: React.FC = () => {
       });
   };
 
-  const listenOrders = () => {
-    firebase.db.collection("orders").onSnapshot(function(querySnapshot) {
-      const orders = [];
+  // const listenOrders = () => {
+  //   firebase.db.collection("orders").onSnapshot(function(querySnapshot) {
+  //     const orders = [];
 
-      querySnapshot.forEach(doc => {
-        orders.push(doc.data().name);
-      });
-      // console.log(orders, "xxx");
-      // console.log("Current data: ", result?.data());
-    });
-  };
-
-  const handleChange = value => {
-    console.log("change");
-  };
+  //     querySnapshot.forEach(doc => {
+  //       orders.push(doc.data().name);
+  //     });
+  //     // console.log(orders, "xxx");
+  //     // console.log("Current data: ", result?.data());
+  //   });
+  // };
 
   const handleSubmit = () => {
     console.log("handleSubmit");
   };
-
-  useEffect(() => {
-    listenOrders();
-  }, []);
 
   return (
     <Formik
@@ -122,14 +145,17 @@ const OrderPage: React.FC = () => {
       onSubmit={handleSubmit}
     >
       {({ handleSubmit, errors, values }) => {
-        console.log(values, "values");
         return (
           <div className={classes.root}>
+            <ActionBar />
             <div className={classes.queueNumber}>
               <Chip label="คิวที่ 1" color="secondary" />
             </div>
             <Field name="provider">
               {({ field }) => <Provider providers={providers} {...field} />}
+            </Field>
+            <Field name="typeOrder">
+              {({ field }) => <TypeOrder typeOrders={typeOrders} {...field} />}
             </Field>
             <div>
               <hr />
@@ -153,7 +179,7 @@ const OrderPage: React.FC = () => {
             <div>
               <hr />
             </div>
-            <Field name="typeOrder">
+            {/* <Field name="typeOrder">
               {({ field }) => (
                 <Grid
                   container
@@ -173,14 +199,10 @@ const OrderPage: React.FC = () => {
                   </Grid>
                 </Grid>
               )}
-            </Field>
-            <hr />
+            </Field> */}
             <Grid container>
               <Grid xs={8}>
                 <TypePrice />
-              </Grid>
-              <Grid xs={4}>
-                <ActionButton />
               </Grid>
             </Grid>
           </div>

@@ -25,9 +25,9 @@ const TypeNoodle = ({ typeNoodles, value }) => {
   return (
     <FormGroup row className={classes.topSpace}>
       <Grid container spacing={2}>
-        <Grid item xs>
-          {typeNoodles.map((item, index) => {
-            return (
+        {typeNoodles.map((item, index) => {
+          return (
+            <Grid item>
               <FormControlLabel
                 key={index}
                 control={
@@ -39,9 +39,9 @@ const TypeNoodle = ({ typeNoodles, value }) => {
                 }
                 label={item.name}
               />
-            );
-          })}
-        </Grid>
+            </Grid>
+          );
+        })}
       </Grid>
     </FormGroup>
   );
