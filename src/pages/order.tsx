@@ -84,6 +84,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const OrderPage: React.FC = () => {
+  const [openAmountOrder, setOpenAmountOrder] = useState(false);
   const classes = useStyles();
   const firebase = useFirebase();
   const initialValues = {
@@ -133,6 +134,7 @@ const OrderPage: React.FC = () => {
   //     // console.log("Current data: ", result?.data());
   //   });
   // };
+  console.log(openAmountOrder, "xx");
 
   const handleSubmit = () => {
     console.log("handleSubmit");
@@ -176,9 +178,15 @@ const OrderPage: React.FC = () => {
             <div>
               <hr />
             </div>
-            {/* <Field name="amountOrder">
-              {({ field }) => <AmountOrder {...field} />}
-            </Field> */}
+            <Field name="amountOrder">
+              {({ field }) => (
+                <AmountOrder
+                  setOpenAmountOrder={setOpenAmountOrder}
+                  openAmountOrder={openAmountOrder}
+                  {...field}
+                />
+              )}
+            </Field>
             <TypePrice />
             {/* <Field name="typeOrder">
               {({ field }) => (
@@ -198,7 +206,7 @@ const OrderPage: React.FC = () => {
                 </Grid>
               )}
             </Field> */}
-            <ActionBar />
+            <ActionBar setOpenAmountOrder={setOpenAmountOrder} />
           </div>
         );
       }}

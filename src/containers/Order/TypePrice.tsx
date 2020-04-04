@@ -175,6 +175,7 @@ const TypePrice = () => {
         size="small"
         variant="contained"
         className={classes.margin}
+        color="primary"
       >
         <AddRoundedIcon />
       </Button>
@@ -183,6 +184,7 @@ const TypePrice = () => {
         size="small"
         variant="contained"
         className={classes.margin}
+        color="secondary"
       >
         <RemoveRoundedIcon />
       </Button>
@@ -199,6 +201,7 @@ const TypePrice = () => {
         size="small"
         variant="contained"
         className={classes.margin}
+        color="primary"
       >
         <AddRoundedIcon />
       </Button>
@@ -207,6 +210,7 @@ const TypePrice = () => {
         size="small"
         variant="contained"
         className={classes.margin}
+        color="secondary"
       >
         <RemoveRoundedIcon />
       </Button>

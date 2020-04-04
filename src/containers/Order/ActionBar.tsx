@@ -2,7 +2,6 @@ import React from "react";
 import Button from "@material-ui/core/Button";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
-import ListAltIcon from "@material-ui/icons/ListAlt";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -32,13 +31,17 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const ActionButton = () => {
+const ActionButton = ({ setOpenAmountOrder }) => {
   const classes = useStyles();
 
   return (
     <AppBar position="fixed" color="primary" className={classes.root}>
-      <Button variant="contained" color="secondary">
-        <ListAltIcon />
+      <Button
+        variant="contained"
+        color="secondary"
+        onClick={() => setOpenAmountOrder(true)}
+      >
+        จำนวน
       </Button>
       <Button variant="contained" color="secondary">
         เพิ่ม

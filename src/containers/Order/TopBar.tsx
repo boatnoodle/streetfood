@@ -2,6 +2,9 @@ import React from "react";
 import Button from "@material-ui/core/Button";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+import { useFormikContext } from "formik";
 import ListAltIcon from "@material-ui/icons/ListAlt";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -39,12 +42,16 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const TopBar = () => {
+  const { values, setFieldValue } = useFormikContext<any>();
   const classes = useStyles();
+  const handleAmountOrder = value => {
+    setFieldValue("orderDetail.amountOrder", value);
+  };
 
   return (
     <AppBar position="fixed" color="primary" className={classes.root}>
       <Button variant="contained" color="secondary">
-        จำนวน
+        <ListAltIcon />
       </Button>
       <Button variant="contained" color="secondary">
         หมายเหตุ
