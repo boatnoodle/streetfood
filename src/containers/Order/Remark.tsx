@@ -132,6 +132,8 @@ const Remark = ({ openDialogRemark, setOpenDialogRemark, presetRemarks }) => {
 
   const resetValue = () => {
     setFieldValue("orderDetail.remarks", []);
+    setOpenDialogRemark(!open);
+    setOpen(!open);
   };
 
   useEffect(() => {

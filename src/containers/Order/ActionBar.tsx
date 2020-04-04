@@ -33,7 +33,11 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const ActionButton = ({ openAmountOrder, setOpenAmountOrder }) => {
+const ActionButton = ({
+  openAmountOrder,
+  setOpenAmountOrder,
+  handleAddOrder
+}) => {
   const classes = useStyles();
   const { values } = useFormikContext<any>();
 
@@ -48,7 +52,7 @@ const ActionButton = ({ openAmountOrder, setOpenAmountOrder }) => {
           จำนวน
         </Badge>
       </Button>
-      <Button variant="contained" color="secondary">
+      <Button variant="contained" color="secondary" onClick={handleAddOrder}>
         เพิ่ม
       </Button>
       <Button variant="contained" color="secondary">

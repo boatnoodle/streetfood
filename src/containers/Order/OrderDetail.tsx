@@ -44,6 +44,7 @@ const OrderDetail = ({ noodles, toppingPork, toppingBeef }) => {
   const handleChangeNoodle = e => {
     const isChecked = e.currentTarget.checked;
     const name = e.currentTarget.name;
+    console.log(name, "xx");
 
     if (isChecked) {
       setFieldValue("orderDetail.noodle", name);
@@ -200,8 +201,6 @@ const OrderDetail = ({ noodles, toppingPork, toppingBeef }) => {
     );
   };
 
-  console.log(values);
-
   return (
     <>
       <FormGroup row>
@@ -214,6 +213,9 @@ const OrderDetail = ({ noodles, toppingPork, toppingBeef }) => {
                     key={index}
                     control={
                       <Checkbox
+                        checked={
+                          values.orderDetail.noodle === item.name ? true : false
+                        }
                         onChange={handleChangeNoodle}
                         name={item.name}
                       />

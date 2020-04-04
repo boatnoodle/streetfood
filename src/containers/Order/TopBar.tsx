@@ -50,7 +50,9 @@ const TopBar = ({ setOpenDialogRemark }) => {
   return (
     <AppBar position="fixed" color="primary" className={classes.root}>
       <Button variant="contained" color="secondary">
-        <ListAltIcon />
+        <Badge badgeContent={values.orders.length} color="secondary">
+          <ListAltIcon />
+        </Badge>
       </Button>
 
       <Button
