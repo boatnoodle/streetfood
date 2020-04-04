@@ -23,6 +23,7 @@ import Remark from "containers/Order/Remark";
 import ActionBar from "containers/Order/ActionBar";
 import TopBar from "containers/Order/TopBar";
 import OrderList from "containers/Order/components/OrderList/OrderList";
+import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -77,6 +78,9 @@ const useStyles = makeStyles((theme: Theme) =>
       position: "fixed",
       top: "6px",
       left: "20%"
+    },
+    btnCancelOrder: {
+      width: "100%"
     }
   })
 );
@@ -85,13 +89,20 @@ const Order = ({ handleSubmit }) => {
   const [openDialogRemark, setOpenDialogRemark] = useState(false);
   const [openDialogOrderList, setOpenDialogOrderList] = useState(false);
   const classes = useStyles();
-  const { values, setFieldValue, initialValues } = useFormikContext<any>();
+  const { values, setFieldValue, initialValues, resetForm } = useFormikContext<
+    any
+  >();
 
   const handleAddOrder = () => {
     const orders = values.orders;
     const order = values.orderDetail;
     setFieldValue("orders", [...orders, order]);
     setFieldValue("orderDetail", initialValues.orderDetail);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleResetForm = () => {
+    resetForm();
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -151,6 +162,15 @@ const Order = ({ handleSubmit }) => {
         setOpenAmountOrder={setOpenAmountOrder}
         handleAddOrder={handleAddOrder}
       />
+      <hr />
+      <Button
+        variant="outlined"
+        color="secondary"
+        onClick={handleResetForm}
+        className={classes.btnCancelOrder}
+      >
+        ยกเลิกออเดอร์
+      </Button>
     </div>
   );
 };
