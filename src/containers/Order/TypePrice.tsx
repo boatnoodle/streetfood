@@ -12,6 +12,11 @@ import { useFormikContext } from "formik";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    root: {
+      display: "grid",
+      gridTemplateColumns: "1fr 1fr 1fr"
+      // marginTop: "25px"
+    },
     margin: {
       margin: theme.spacing(1)
     },
@@ -152,79 +157,60 @@ const TypePrice = () => {
   };
 
   return (
-    <FormGroup>
-      <RadioGroup
-        aria-label="gender"
-        value={values.orderDetail.price.typePrice}
-        onChange={handleChange}
+    <RadioGroup
+      value={values.orderDetail.price.typePrice}
+      onChange={handleChange}
+      className={classes.root}
+    >
+      <FormControlLabel
+        className={classes.colorPrimary}
+        value="ธรรมดา"
+        control={<Radio onChange={handleChange} name="ธรรมดา" />}
+        label={
+          informationPrice.labelNormal + " " + informationPrice.priceNormal
+        }
+      />
+      <Button
+        onClick={() => handlePrice("add", "ธรรมดา")}
+        size="small"
+        variant="contained"
+        className={classes.margin}
       >
-        <Grid container>
-          <Grid xs={7}>
-            <FormControlLabel
-              className={classes.colorPrimary}
-              value="ธรรมดา"
-              control={<Radio onChange={handleChange} name="ธรรมดา" />}
-              label={
-                informationPrice.labelNormal +
-                " " +
-                informationPrice.priceNormal
-              }
-            />
-          </Grid>
-          <Grid xs>
-            <Button
-              onClick={() => handlePrice("add", "ธรรมดา")}
-              size="small"
-              variant="contained"
-              className={classes.margin}
-            >
-              <AddRoundedIcon />
-            </Button>
-            <Button
-              onClick={() => handlePrice("delete", "ธรรมดา")}
-              size="small"
-              variant="contained"
-              className={classes.margin}
-            >
-              <RemoveRoundedIcon />
-            </Button>
-          </Grid>
-        </Grid>
-
-        <Grid container>
-          <Grid xs={7}>
-            <FormControlLabel
-              className={classes.colorSecondary}
-              value="พิเศษ"
-              control={<Radio onChange={handleChange} name="พิเศษ" />}
-              label={
-                informationPrice.labelSpecial +
-                " " +
-                informationPrice.priceSpecial
-              }
-            />
-          </Grid>
-          <Grid xs>
-            <Button
-              onClick={() => handlePrice("add", "พิเศษ")}
-              size="small"
-              variant="contained"
-              className={classes.margin}
-            >
-              <AddRoundedIcon />
-            </Button>
-            <Button
-              onClick={() => handlePrice("delete", "พิเศษ")}
-              size="small"
-              variant="contained"
-              className={classes.margin}
-            >
-              <RemoveRoundedIcon />
-            </Button>
-          </Grid>
-        </Grid>
-      </RadioGroup>
-    </FormGroup>
+        <AddRoundedIcon />
+      </Button>
+      <Button
+        onClick={() => handlePrice("delete", "ธรรมดา")}
+        size="small"
+        variant="contained"
+        className={classes.margin}
+      >
+        <RemoveRoundedIcon />
+      </Button>
+      <FormControlLabel
+        className={classes.colorSecondary}
+        value="พิเศษ"
+        control={<Radio onChange={handleChange} name="พิเศษ" />}
+        label={
+          informationPrice.labelSpecial + " " + informationPrice.priceSpecial
+        }
+      />
+      <Button
+        onClick={() => handlePrice("add", "พิเศษ")}
+        size="small"
+        variant="contained"
+        className={classes.margin}
+      >
+        <AddRoundedIcon />
+      </Button>
+      <Button
+        onClick={() => handlePrice("delete", "พิเศษ")}
+        size="small"
+        variant="contained"
+        className={classes.margin}
+      >
+        <RemoveRoundedIcon />
+      </Button>
+    </RadioGroup>
   );
 };
 

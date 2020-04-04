@@ -9,11 +9,20 @@ import { useFormikContext } from "formik";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    root: {
+      marginTop: "20px",
+      "& .MuiGrid-spacing-xs-3 > .MuiGrid-item": {
+        padding: "0 5px"
+      },
+      "& h6": {
+        margin: 0
+      },
+      "& button": {
+        margin: "0px"
+      }
+    },
     margin: {
       margin: theme.spacing(1)
-    },
-    topSpace: {
-      marginTop: "20px"
     }
   })
 );
@@ -40,26 +49,32 @@ const AmountOrder = () => {
   };
 
   return (
-    <FormGroup>
-      <Grid container spacing={3} justify="flex-end">
-        <Grid xs={3}>จำนวน</Grid>
-        <Grid xs={1}>{values.orderDetail.amountOrder}</Grid>
-        <Grid>
+    <FormGroup className={classes.root}>
+      <Grid container spacing={3}>
+        <Grid item>
+          <h6>จำนวน</h6>
+        </Grid>
+        <Grid item>
+          <h6>{values.orderDetail.amountOrder}</h6>
+        </Grid>
+        <Grid item>
           <Button
             onClick={() => handleAmountOrder("add")}
             size="small"
             variant="contained"
             className={classes.margin}
           >
-            <AddRoundedIcon />
+            +{/* <AddRoundedIcon /> */}
           </Button>
+        </Grid>
+        <Grid item>
           <Button
             onClick={() => handleAmountOrder("delete")}
             size="small"
             variant="contained"
             className={classes.margin}
           >
-            <RemoveRoundedIcon />
+            -{/* <RemoveRoundedIcon /> */}
           </Button>
         </Grid>
       </Grid>

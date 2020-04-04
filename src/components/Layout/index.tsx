@@ -15,7 +15,7 @@ const Container = styled.div`
 const Layout: React.FC<any> = ({ children }) => {
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <Container>{children}</Container>
     </>
   );

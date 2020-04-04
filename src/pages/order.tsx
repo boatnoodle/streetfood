@@ -10,9 +10,9 @@ import TypeNoodle from "containers/Order/TypeNoodle";
 import OrderDetail from "containers/Order/OrderDetail";
 import TypeOrder from "containers/Order/TypeOrder";
 import TypePrice from "containers/Order/TypePrice";
+import AmountOrder from "containers/Order/AmountOrder";
 import ActionBar from "containers/Order/ActionBar";
-import Button from "@material-ui/core/Button";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
+import TopBar from "containers/Order/TopBar";
 
 import {
   typeMenus,
@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme: Theme) =>
       },
       // position: "relative",
       flexGrow: 1,
-      marginTop: "50px",
+      margin: "35px 0 60px 0",
       hr: {
         margin: "10px 0"
       }
@@ -147,10 +147,7 @@ const OrderPage: React.FC = () => {
       {({ handleSubmit, errors, values }) => {
         return (
           <div className={classes.root}>
-            <ActionBar />
-            <div className={classes.queueNumber}>
-              <Chip label="คิวที่ 1" color="secondary" />
-            </div>
+            <TopBar />
             <Field name="provider">
               {({ field }) => <Provider providers={providers} {...field} />}
             </Field>
@@ -179,6 +176,10 @@ const OrderPage: React.FC = () => {
             <div>
               <hr />
             </div>
+            {/* <Field name="amountOrder">
+              {({ field }) => <AmountOrder {...field} />}
+            </Field> */}
+            <TypePrice />
             {/* <Field name="typeOrder">
               {({ field }) => (
                 <Grid
@@ -193,18 +194,11 @@ const OrderPage: React.FC = () => {
                     <Remark presetRemarks={presetRemarks} />
                   </Grid>
                   <Grid item xs>
-                    <Field name="amountOrder">
-                      {({ field }) => <AmountOrder {...field} />}
-                    </Field>
                   </Grid>
                 </Grid>
               )}
             </Field> */}
-            <Grid container>
-              <Grid xs={8}>
-                <TypePrice />
-              </Grid>
-            </Grid>
+            <ActionBar />
           </div>
         );
       }}

@@ -6,7 +6,7 @@ export const providers = [
   },
   {
     id: 2,
-    name: "FOOD PANDA",
+    name: "PANDA",
     default: true
   }
 ];
