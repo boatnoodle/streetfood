@@ -24,6 +24,7 @@ import ActionBar from "containers/Order/ActionBar";
 import TopBar from "containers/Order/TopBar";
 import OrderList from "containers/Order/components/OrderList/OrderList";
 import Button from "@material-ui/core/Button";
+import ComfirmDialog from "components/ConfirmDialog";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -88,6 +89,7 @@ const Order = ({ handleSubmit }) => {
   const [openAmountOrder, setOpenAmountOrder] = useState(false);
   const [openDialogRemark, setOpenDialogRemark] = useState(false);
   const [openDialogOrderList, setOpenDialogOrderList] = useState(false);
+  const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const classes = useStyles();
   const { values, setFieldValue, initialValues, resetForm } = useFormikContext<
     any
@@ -104,6 +106,11 @@ const Order = ({ handleSubmit }) => {
   const handleResetForm = () => {
     resetForm();
     window.scrollTo({ top: 0, behavior: "smooth" });
+    setOpenConfirmDialog(false);
+  };
+
+  const toggleDialog = () => {
+    setOpenConfirmDialog(!openConfirmDialog);
   };
 
   return (
@@ -163,10 +170,19 @@ const Order = ({ handleSubmit }) => {
         handleAddOrder={handleAddOrder}
       />
       <hr />
+      <ComfirmDialog
+        textTitle="ยืนยันการลบออเดอร์"
+        textContent="คุณยืนยันที่จะลบออเดอร์นี้หรือไม่ ?"
+        textConfirm="ยืนยัน"
+        textClose="ยกเลิก"
+        openConfirmDialog={openConfirmDialog}
+        setOpenConfirmDialog={setOpenConfirmDialog}
+        handleOnEnter={handleResetForm}
+      />
       <Button
         variant="outlined"
         color="secondary"
-        onClick={handleResetForm}
+        onClick={toggleDialog}
         className={classes.btnCancelOrder}
       >
         ยกเลิกออเดอร์
