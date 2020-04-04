@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useState } from "react";
 import FormGroup from "@material-ui/core/FormGroup";
 import Grid, { GridSpacing } from "@material-ui/core/Grid";
@@ -16,19 +17,17 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: "10px"
     },
     btnAddTopping: {
-      width: "30px",
-      height: "30px",
-      background: "#3f51b5",
-      padding: "0",
-      color: "white",
-      marginRight: "5px"
+      fontSize: "0.8rem",
+      fontWeight: "normal",
+      color: "#3f51b5",
+      textDecoration: "underline",
+      marginRight: "10px"
     },
     btnDeleteTopping: {
-      width: "30px",
-      height: "30px",
-      background: "#c51162",
-      padding: "0",
-      color: "white"
+      fontSize: "0.8rem",
+      fontWeight: "normal",
+      color: "#c51162",
+      textDecoration: "underline"
     },
     textToppingMore: {
       fontSize: "14px",
@@ -181,6 +180,28 @@ const OrderDetail = ({ noodles, toppingPork, toppingBeef }) => {
     }
   };
 
+  const toppingButton = (item, typeTopping) => {
+    return (
+      <>
+        <a
+          onClick={() => handleAddMoreTopping(item.name, typeTopping, "add")}
+          className={classes.btnAddTopping}
+        >
+          เพิ่ม
+        </a>
+        <a
+          onClick={() => handleAddMoreTopping(item.name, typeTopping, "delete")}
+          // type="button"
+          className={classes.btnDeleteTopping}
+        >
+          ลด
+        </a>
+      </>
+    );
+  };
+
+  console.log(values);
+
   return (
     <>
       <FormGroup row>
@@ -230,7 +251,7 @@ const OrderDetail = ({ noodles, toppingPork, toppingBeef }) => {
         <Grid container spacing={2}>
           {typeTopping === "toppingPork" ? (
             <>
-              <Grid item xs={4}>
+              <Grid item xs={12}>
                 <FormControlLabel
                   control={
                     <Checkbox
@@ -244,6 +265,7 @@ const OrderDetail = ({ noodles, toppingPork, toppingBeef }) => {
               {toppingPork.map((item, index) => {
                 return (
                   <Grid item xs={4}>
+                    {toppingButton(item, "toppingPork")}
                     <Badge
                       color="secondary"
                       overlap="circle"
@@ -272,32 +294,12 @@ const OrderDetail = ({ noodles, toppingPork, toppingBeef }) => {
                       />
                     </Badge>
                   </Grid>
-                  // <Grid xs={4}>
-                  //   <button
-                  //     onClick={() =>
-                  //       handleAddMoreTopping(item.name, "toppingPork", "add")
-                  //     }
-                  //     type="button"
-                  //     className={classes.btnAddTopping}
-                  //   >
-                  //     เพิ่ม
-                  //   </button>
-                  //   <button
-                  //     onClick={() =>
-                  //       handleAddMoreTopping(item.name, "toppingPork", "delete")
-                  //     }
-                  //     type="button"
-                  //     className={classes.btnDeleteTopping}
-                  //   >
-                  //     ลด
-                  //   </button>
-                  // </Grid>
                 );
               })}
             </>
           ) : (
             <>
-              <Grid item xs={4}>
+              <Grid item xs={12}>
                 <FormControlLabel
                   control={
                     <Checkbox
@@ -311,6 +313,7 @@ const OrderDetail = ({ noodles, toppingPork, toppingBeef }) => {
               {toppingBeef.map((item, index) => {
                 return (
                   <Grid item xs={4}>
+                    {toppingButton(item, "toppingBeef")}
                     <Badge
                       color="secondary"
                       overlap="circle"
@@ -339,26 +342,6 @@ const OrderDetail = ({ noodles, toppingPork, toppingBeef }) => {
                       />
                     </Badge>
                   </Grid>
-                  /* <Grid>
-                    <button
-                      onClick={() =>
-                        handleAddMoreTopping(item.name, "toppingBeef", "add")
-                      }
-                      type="button"
-                      className={classes.btnAddTopping}
-                    >
-                      เพิ่ม
-                    </button>
-                    <button
-                      onClick={() =>
-                        handleAddMoreTopping(item.name, "toppingBeef", "delete")
-                      }
-                      type="button"
-                      className={classes.btnDeleteTopping}
-                    >
-                      ลด
-                    </button>
-                  </Grid> */
                 );
               })}
             </>
