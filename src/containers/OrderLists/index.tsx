@@ -89,12 +89,14 @@ const OrderLists: React.FC<any> = ({ datas }) => {
           datas.map((item, index) => {
             return (
               <Fragment key={index}>
-                <Grid item xs={12} className={classes.topSpace}>
-                  <div className={classes.text}>คิวที่ {item.queueNo}</div>
-                </Grid>
                 <Grid item xs={12}>
                   <Card className={classes.card}>
                     <CardContent>
+                      <Grid item xs={12}>
+                        <span className={classes.text}>
+                          คิวที่ {item.queueNo}
+                        </span>
+                      </Grid>
                       <Grid container>
                         {item?.orders.map((order, index) => {
                           return (

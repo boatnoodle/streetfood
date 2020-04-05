@@ -3,7 +3,7 @@ import { useFirebase } from "components/Firebase/useFirebase";
 import OrderLists from "containers/OrderLists";
 
 const OrderListsPage: React.FC = () => {
-  const [datas, setDatas] = useState();
+  const [datas, setDatas] = useState(null);
   const firebase = useFirebase();
 
   const listenOrders = () => {
