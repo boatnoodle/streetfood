@@ -100,6 +100,7 @@ const Order = ({ handleSubmit }) => {
     const order = values.orderDetail;
     setFieldValue("orders", [...orders, order]);
     setFieldValue("orderDetail", initialValues.orderDetail);
+    setFieldValue("orderDetail.typeTopping", "");
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 

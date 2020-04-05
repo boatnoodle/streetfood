@@ -33,6 +33,7 @@ const OrderPage: React.FC = () => {
       typeOrder: "ใส่ถุง",
       typeMenu: "ก๋วยเตี๋ยว",
       typeNoodle: "เรือ",
+      typeTopping: "",
       noodle: "",
       allToppingPork: false,
       allToppingBeef: false,

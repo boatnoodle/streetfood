@@ -39,14 +39,13 @@ const useStyles = makeStyles((theme: Theme) =>
 const OrderDetail = ({ noodles, toppingPork, toppingBeef }) => {
   const classes = useStyles();
   const { values, setFieldValue } = useFormikContext<any>();
-  const [typeTopping, setTypeTopping] = useState("");
   const checkBoxToppingPork = useRef(null);
   const checkBoxToppingBeef = useRef(null);
+  const { typeTopping } = values.orderDetail;
 
   const handleChangeNoodle = e => {
     const isChecked = e.currentTarget.checked;
     const name = e.currentTarget.name;
-    console.log(name, "xx");
 
     if (isChecked) {
       setFieldValue("orderDetail.noodle", name);
@@ -56,40 +55,22 @@ const OrderDetail = ({ noodles, toppingPork, toppingBeef }) => {
   };
 
   const handleAllTopping = (e, type) => {
-    const restToppingPork = values.orderDetail.topping.filter(
-      item => item.typeTopping === "toppingPork"
-    );
-    const restToppingBeef = values.orderDetail.topping.filter(
-      item => item.typeTopping === "toppingBeef"
-    );
     const isChecked = e.currentTarget.checked;
 
     if (type === "toppingPork" && isChecked) {
+      setFieldValue("orderDetail.allToppingBeef", false);
       setFieldValue("orderDetail.allToppingPork", true);
-      setFieldValue("orderDetail.topping", [
-        ...values.orderDetail.topping,
-        ...toppingPork
-      ]);
+      setFieldValue("orderDetail.topping", [...toppingPork]);
     } else if (type === "toppingPork" && !isChecked) {
       setFieldValue("orderDetail.allToppingPork", false);
-      if (values.orderDetail.allToppingBeef) {
-        setFieldValue("orderDetail.topping", [...toppingBeef]);
-      } else {
-        setFieldValue("orderDetail.topping", [...restToppingBeef]);
-      }
+      setFieldValue("orderDetail.topping", []);
     } else if (type === "toppingBeef" && isChecked) {
+      setFieldValue("orderDetail.allToppingPork", false);
       setFieldValue("orderDetail.allToppingBeef", true);
-      setFieldValue("orderDetail.topping", [
-        ...values.orderDetail.topping,
-        ...toppingBeef
-      ]);
+      setFieldValue("orderDetail.topping", [...toppingBeef]);
     } else if (type === "toppingBeef" && !isChecked) {
       setFieldValue("orderDetail.allToppingBeef", false);
-      if (values.orderDetail.allToppingPork) {
-        setFieldValue("orderDetail.topping", [...toppingPork]);
-      } else {
-        setFieldValue("orderDetail.topping", [...restToppingPork]);
-      }
+      setFieldValue("orderDetail.topping", []);
     }
   };
 
@@ -177,9 +158,9 @@ const OrderDetail = ({ noodles, toppingPork, toppingBeef }) => {
 
   const handleTopping = typeTopping => {
     if (typeTopping === "toppingPork") {
-      setTypeTopping("toppingPork");
+      setFieldValue("orderDetail.typeTopping", "toppingPork");
     } else {
-      setTypeTopping("toppingBeef");
+      setFieldValue("orderDetail.typeTopping", "toppingBeef");
     }
   };
 
@@ -190,10 +171,10 @@ const OrderDetail = ({ noodles, toppingPork, toppingBeef }) => {
       }
     };
     if (!typeTopping) {
-      setTypeTopping("toppingPork");
+      setFieldValue("orderDetail.typeTopping", "toppingPork");
       handleAllTopping(e, "toppingPork");
     } else {
-      setTypeTopping(typeTopping);
+      setFieldValue("orderDetail.typeTopping", typeTopping);
       handleAllTopping(e, typeTopping);
     }
   }, [typeTopping]);
