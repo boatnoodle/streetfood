@@ -183,7 +183,7 @@ const OrderDetail = ({ noodles, toppingPork, toppingBeef }) => {
 
   const toppingButton = (item, typeTopping) => {
     return (
-      <>
+      <div>
         <a
           onClick={() => handleAddMoreTopping(item.name, typeTopping, "add")}
           className={classes.btnAddTopping}
@@ -197,40 +197,12 @@ const OrderDetail = ({ noodles, toppingPork, toppingBeef }) => {
         >
           ลด
         </a>
-      </>
+      </div>
     );
   };
 
   return (
     <>
-      <FormGroup row>
-        <Grid container spacing={2}>
-          {noodles.map((item, index) => {
-            return (
-              <Grid item xs>
-                <div key={index}>
-                  <FormControlLabel
-                    key={index}
-                    control={
-                      <Checkbox
-                        checked={
-                          values.orderDetail.noodle === item.name ? true : false
-                        }
-                        onChange={handleChangeNoodle}
-                        name={item.name}
-                      />
-                    }
-                    label={item.name}
-                  />
-                </div>
-              </Grid>
-            );
-          })}
-        </Grid>
-      </FormGroup>
-      <Grid xs>
-        <hr />
-      </Grid>
       <FormGroup row>
         <Grid container spacing={2}>
           <Grid item>
@@ -267,7 +239,6 @@ const OrderDetail = ({ noodles, toppingPork, toppingBeef }) => {
               {toppingPork.map((item, index) => {
                 return (
                   <Grid item xs={4}>
-                    {toppingButton(item, "toppingPork")}
                     <Badge
                       color="secondary"
                       overlap="circle"
@@ -295,6 +266,7 @@ const OrderDetail = ({ noodles, toppingPork, toppingBeef }) => {
                         label={item.name}
                       />
                     </Badge>
+                    {toppingButton(item, "toppingPork")}
                   </Grid>
                 );
               })}
@@ -315,7 +287,6 @@ const OrderDetail = ({ noodles, toppingPork, toppingBeef }) => {
               {toppingBeef.map((item, index) => {
                 return (
                   <Grid item xs={4}>
-                    {toppingButton(item, "toppingBeef")}
                     <Badge
                       color="secondary"
                       overlap="circle"
@@ -343,11 +314,40 @@ const OrderDetail = ({ noodles, toppingPork, toppingBeef }) => {
                         label={item.name}
                       />
                     </Badge>
+                    {toppingButton(item, "toppingBeef")}
                   </Grid>
                 );
               })}
             </>
           )}
+        </Grid>
+      </FormGroup>
+      <Grid xs>
+        <hr />
+      </Grid>
+      <FormGroup row>
+        <Grid container spacing={2}>
+          {noodles.map((item, index) => {
+            return (
+              <Grid item xs>
+                <div key={index}>
+                  <FormControlLabel
+                    key={index}
+                    control={
+                      <Checkbox
+                        checked={
+                          values.orderDetail.noodle === item.name ? true : false
+                        }
+                        onChange={handleChangeNoodle}
+                        name={item.name}
+                      />
+                    }
+                    label={item.name}
+                  />
+                </div>
+              </Grid>
+            );
+          })}
         </Grid>
       </FormGroup>
     </>
