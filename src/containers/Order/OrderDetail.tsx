@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import FormGroup from "@material-ui/core/FormGroup";
 import Grid, { GridSpacing } from "@material-ui/core/Grid";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -39,7 +39,9 @@ const useStyles = makeStyles((theme: Theme) =>
 const OrderDetail = ({ noodles, toppingPork, toppingBeef }) => {
   const classes = useStyles();
   const { values, setFieldValue } = useFormikContext<any>();
-  const [typeTopping, setTypeTopping] = useState("toppingPork");
+  const [typeTopping, setTypeTopping] = useState("");
+  const checkBoxToppingPork = useRef(null);
+  const checkBoxToppingBeef = useRef(null);
 
   const handleChangeNoodle = e => {
     const isChecked = e.currentTarget.checked;
@@ -181,6 +183,21 @@ const OrderDetail = ({ noodles, toppingPork, toppingBeef }) => {
     }
   };
 
+  useEffect(() => {
+    const e = {
+      currentTarget: {
+        checked: true
+      }
+    };
+    if (!typeTopping) {
+      setTypeTopping("toppingPork");
+      handleAllTopping(e, "toppingPork");
+    } else {
+      setTypeTopping(typeTopping);
+      handleAllTopping(e, typeTopping);
+    }
+  }, [typeTopping]);
+
   const toppingButton = (item, typeTopping) => {
     return (
       <div>
@@ -192,7 +209,6 @@ const OrderDetail = ({ noodles, toppingPork, toppingBeef }) => {
         </a>
         <a
           onClick={() => handleAddMoreTopping(item.name, typeTopping, "delete")}
-          // type="button"
           className={classes.btnDeleteTopping}
         >
           ลด
@@ -229,6 +245,7 @@ const OrderDetail = ({ noodles, toppingPork, toppingBeef }) => {
                 <FormControlLabel
                   control={
                     <Checkbox
+                      innerRef={checkBoxToppingPork}
                       checked={values.orderDetail.allToppingPork}
                       onChange={e => handleAllTopping(e, "toppingPork")}
                     />
@@ -277,6 +294,7 @@ const OrderDetail = ({ noodles, toppingPork, toppingBeef }) => {
                 <FormControlLabel
                   control={
                     <Checkbox
+                      innerRef={checkBoxToppingBeef}
                       checked={values.orderDetail.allToppingBeef}
                       onChange={e => handleAllTopping(e, "toppingBeef")}
                     />
