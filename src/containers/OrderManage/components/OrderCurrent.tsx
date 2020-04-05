@@ -42,8 +42,7 @@ const useStyles = makeStyles({
   }
 });
 
-const OrderCurrent = ({ orderDoing }) => {
-  console.log(orderDoing, "xx");
+const OrderCurrent = ({ orderDoing, setOrderDoing }) => {
   const [openSnackBar, setOpenSnackBar] = React.useState(false);
   const firebase = useFirebase();
   const classes = useStyles();
@@ -57,6 +56,7 @@ const OrderCurrent = ({ orderDoing }) => {
   };
 
   const handleFinishOrder = () => {
+    if (orderDoing.length === 0) return false;
     const orderRef = firebase.db.collection("orders").doc(orderDoing[0].id);
 
     // Set the "capital" field of the city 'DC'
@@ -66,6 +66,7 @@ const OrderCurrent = ({ orderDoing }) => {
       })
       .then(function() {
         setOpenSnackBar(true);
+        // setOrderDoing([]);
         console.log("Document successfully updated!");
       })
       .catch(function(error) {

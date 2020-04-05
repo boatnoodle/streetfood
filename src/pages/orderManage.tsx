@@ -9,14 +9,16 @@ export const orderStatus = {
 };
 
 const OrderManagePage: React.FC = () => {
-  const [orderWait, setOrderWait] = useState(null);
-  const [orderDoing, setOrderDoing] = useState(null);
+  const [orderWait, setOrderWait] = useState([]);
+  const [orderDoing, setOrderDoing] = useState([]);
   const firebase = useFirebase();
 
   const fetchOrderByStatus = status => {
-    firebase.db
-      .collection("orders")
+    const ref = firebase.db.collection("orders");
+
+    ref
       .where("orderStatus", "==", orderStatus[status])
+      .orderBy("created", "asc")
       .onSnapshot(function(querySnapshot) {
         const orders = [];
 
@@ -29,52 +31,71 @@ const OrderManagePage: React.FC = () => {
         } else if (orderStatus[status] === orderStatus.DOING) {
           setOrderDoing(orders);
         }
+
+        return orders;
       });
   };
 
-  const getOrderDoing = () => {
+  const getOrderDoing = async () => {
     firebase.db
       .collection("orders")
-      .where("orderStatus", "==", orderStatus.WAIT)
-      .limit(1)
-      .get()
-      .then(function(querySnapshot) {
-        querySnapshot.forEach(function(doc) {
-          // doc.data() is never undefined for query doc snapshots
-          // console.log(doc.id, " => ", doc.data());
-          const orderRef = firebase.db.collection("orders").doc(doc.id);
+      .where("orderStatus", "==", orderStatus.DOING)
+      .onSnapshot(function(querySnapshot) {
+        let arr;
+        querySnapshot.forEach(doc => {
+          arr = doc.data();
+        });
 
-          // Set the "capital" field of the city 'DC'
-          return orderRef
-            .update({
-              orderStatus: orderStatus.DOING
-            })
-            .then(function() {
-              console.log("Document successfully updated!");
+        if (!arr) {
+          firebase.db
+            .collection("orders")
+            .where("orderStatus", "==", orderStatus.WAIT)
+            .orderBy("created", "asc")
+            .limit(1)
+            .get()
+            .then(function(querySnapshot) {
+              querySnapshot.forEach(function(doc) {
+                const orderRef = firebase.db.collection("orders").doc(doc.id);
+
+                return orderRef
+                  .update({
+                    orderStatus: orderStatus.DOING
+                  })
+                  .then(function() {
+                    console.log("change status to doing already!");
+                  })
+                  .catch(function(error) {
+                    // The document probably doesn't exist.
+                    console.error("Error updating document: ", error);
+                  });
+              });
             })
             .catch(function(error) {
-              // The document probably doesn't exist.
-              console.error("Error updating document: ", error);
+              console.log("Error getting documents: ", error);
             });
-        });
-      })
-      .catch(function(error) {
-        console.log("Error getting documents: ", error);
+        }
       });
   };
 
   useEffect(() => {
-    if (orderDoing?.length === 0) {
+    if (orderDoing.length === 0) {
       getOrderDoing();
     }
-  }, [orderDoing, orderWait]);
+  }, [orderWait, orderDoing]);
+
   useEffect(() => {
     fetchOrderByStatus("WAIT");
     fetchOrderByStatus("DOING");
   }, []);
 
   if (orderWait && orderDoing) {
-    return <OrderManage orderWait={orderWait} orderDoing={orderDoing} />;
+    return (
+      <OrderManage
+        orderWait={orderWait}
+        orderDoing={orderDoing}
+        setOrderDoing={setOrderDoing}
+      />
+    );
   }
   return <div>loading...</div>;
 };

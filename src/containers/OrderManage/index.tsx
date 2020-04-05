@@ -4,6 +4,7 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import OrderAll from "./components/OrderAll";
 import OrderCurrent from "./components/OrderCurrent";
+import OrderDetail from "./components/OrderDetail";
 
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 
@@ -68,16 +69,12 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const OrderManage: React.FC<any> = ({ orderWait, orderDoing }) => {
-  console.log(orderWait, orderDoing, "xxx");
+const OrderManage: React.FC<any> = ({
+  orderWait,
+  orderDoing,
+  setOrderDoing
+}) => {
   const classes = useStyles();
-
-  const sortTopping = (a, b) => {
-    if (a.amount > b.amount) return 1;
-    if (b.amount > a.amount) return -1;
-
-    return 0;
-  };
 
   useEffect(() => {
     // window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
@@ -87,10 +84,10 @@ const OrderManage: React.FC<any> = ({ orderWait, orderDoing }) => {
     <div className={classes.root}>
       <Grid container spacing={3}>
         <Grid item xs>
-          Order Detail
+          <OrderDetail orderDoing={orderDoing} />
         </Grid>
-        <Grid item xs={4}>
-          <OrderCurrent orderDoing={orderDoing} />
+        <Grid item xs={3}>
+          <OrderCurrent orderDoing={orderDoing} setOrderDoing={setOrderDoing} />
         </Grid>
         <Grid item xs={3}>
           <OrderAll orderWait={orderWait} />
