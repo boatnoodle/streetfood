@@ -6,6 +6,7 @@ import { Firebase, FirebaseContext } from "components/Firebase/";
 import client from "./client";
 import OrderPage from "pages/order";
 import OrderListsPage from "pages/orderLists";
+import OrderManagePage from "pages/orderManage";
 import NotFoundPage from "pages/not-found";
 import Layout from "components/Layout";
 import LayoutWithoutHeading from "components/Layout/withOutHeading";
@@ -40,6 +41,12 @@ function App() {
             exact
             path="/order-lists"
             component={OrderListsPage}
+            useLayout={false}
+          />
+          <PublicRoute
+            exact
+            path="/order-manage"
+            component={OrderManagePage}
             useLayout={false}
           />
           <PublicRoute path="" component={NotFoundPage} useLayout={true} />

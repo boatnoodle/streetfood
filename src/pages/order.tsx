@@ -29,6 +29,7 @@ const OrderPage: React.FC = () => {
     queueNo: 1,
     orders: [],
     provider: "PANDA",
+    orderStatus: "รอ",
     orderDetail: {
       typeOrder: "ใส่ถุง",
       typeMenu: "ก๋วยเตี๋ยว",
@@ -71,6 +72,8 @@ const OrderPage: React.FC = () => {
     const payload = {
       tableNo: value.tableNo,
       queueNo: value.queueNo,
+      provider: value.provider,
+      orderStatus: value.orderStatus,
       orders: orders,
       created: firebaseGlobal.firestore.FieldValue.serverTimestamp()
     };
