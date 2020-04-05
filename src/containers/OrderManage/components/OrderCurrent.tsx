@@ -46,6 +46,10 @@ const OrderCurrent = ({ orderDoing, setOrderDoing }) => {
   const [openSnackBar, setOpenSnackBar] = React.useState(false);
   const firebase = useFirebase();
   const classes = useStyles();
+  const typeTopping = {
+    toppingPork: "หมู",
+    toppingBeef: "เนื้อ"
+  };
 
   const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
     if (reason === "clickaway") {
@@ -119,7 +123,9 @@ const OrderCurrent = ({ orderDoing, setOrderDoing }) => {
               <TableRow key={index}>
                 <TableCell>
                   <div>
-                    {`${item.typeMenu} ${item.typeNoodle} ${item.noodle} `}
+                    {`${item.typeMenu}${item.typeNoodle}${
+                      typeTopping[item.typeTopping]
+                    } ${item.noodle} `}
                     <span>{item.price.typePrice}</span>
                   </div>
                 </TableCell>
