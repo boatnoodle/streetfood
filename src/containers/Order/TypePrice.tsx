@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Button from "@material-ui/core/Button";
-import FormGroup from "@material-ui/core/FormGroup";
-import Grid, { GridSpacing } from "@material-ui/core/Grid";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
@@ -83,9 +81,9 @@ const TypePrice = () => {
         "orderDetail.price.price",
         values.orderDetail.price.price + 10
       );
+      setFieldValue("orderDetail.price.typePrice", typePrice);
     } else {
       let minPrice;
-
       if (values.provider === myShop && typePrice === normalPrice) {
         minPrice = myShopPriceNormal;
       } else if (values.provider === myShop && typePrice === specialPrice) {
@@ -121,10 +119,10 @@ const TypePrice = () => {
 
   useEffect(() => {
     getPriceFromProvider();
-  }, [values.orderDetail.provider]);
+  }, [values.provider]);
 
   const getPriceFromProvider = () => {
-    const provider = values.orderDetail.provider;
+    const provider = values.provider;
     const typePrice = values.orderDetail.price.typePrice;
     const informationPrice = {
       labelNormal: null,

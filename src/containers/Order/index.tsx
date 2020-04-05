@@ -119,7 +119,7 @@ const Order = ({ handleSubmit }) => {
         setOpenDialogRemark={setOpenDialogRemark}
         setOpenDialogOrderList={setOpenDialogOrderList}
       />
-      <Field name="orderDetail.provider">
+      <Field name="provider">
         {({ field }) => <Provider providers={providers} {...field} />}
       </Field>
       <Field name="orderDetail.typeOrder">

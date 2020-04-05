@@ -17,12 +17,12 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const Provider = ({ providers, value, onChange }) => {
+const Provider = ({ providers, value }) => {
   const classes = useStyles();
   const { setFieldValue } = useFormikContext();
 
   const handleChange = e => {
-    setFieldValue("orderDetail.provider", e.currentTarget.name);
+    setFieldValue("provider", e.currentTarget.name);
   };
 
   return (

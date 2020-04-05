@@ -28,8 +28,8 @@ const OrderPage: React.FC = () => {
     tableNo: null,
     queueNo: 1,
     orders: [],
+    provider: "PANDA",
     orderDetail: {
-      provider: "PANDA",
       typeOrder: "ใส่ถุง",
       typeMenu: "ก๋วยเตี๋ยว",
       typeNoodle: "เรือ",

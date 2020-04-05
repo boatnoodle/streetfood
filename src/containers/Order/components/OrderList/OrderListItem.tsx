@@ -101,7 +101,7 @@ const OrderListItem = () => {
                 <Grid item xs={12}>
                   <span className={classes.text}>No. {index + 1} </span>
                   <Chip label={item.typeOrder} color="secondary" />{" "}
-                  <Chip label={item.provider} color="primary" />
+                  <Chip label={values.provider} color="primary" />
                 </Grid>
                 <Grid item xs={10}>
                   {/* เส้น */}
