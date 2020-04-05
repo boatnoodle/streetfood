@@ -11,20 +11,20 @@ const useStyles = makeStyles((theme: Theme) =>
       top: "auto",
       bottom: 0,
       display: "grid",
-      gridTemplateColumns: "1fr 1fr 1fr 1fr",
+      gridTemplateColumns: "1fr 1fr 1fr ",
       "& button": {
         borderRadius: 0,
         width: "100%",
         height: "46px"
       },
       "& button:first-child": {
-        background: "#2778d0"
+        background: "#929292"
       },
       "& button:nth-child(2)": {
         background: "#975ca9"
       },
       "& button:last-child": {
-        background: "#21a08a"
+        background: "#2778d0"
       }
     },
     nonWhiteSpace: {
@@ -37,18 +37,25 @@ const ActionButton = ({
   openAmountOrder,
   setOpenAmountOrder,
   handleAddOrder,
-  handleSubmit
+  setOpenDialogRemark
 }) => {
   const classes = useStyles();
-  const { values, resetForm } = useFormikContext<any>();
-
-  const handleResetForm = () => {
-    resetForm();
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  const { values } = useFormikContext<any>();
 
   return (
     <AppBar position="fixed" color="primary" className={classes.root}>
+      <Button
+        variant="contained"
+        color="secondary"
+        onClick={() => setOpenDialogRemark(true)}
+      >
+        <Badge
+          badgeContent={values.orderDetail.remarks.length}
+          color="secondary"
+        >
+          หมายเหตุ
+        </Badge>
+      </Button>
       <Button
         variant="contained"
         color="secondary"
@@ -59,12 +66,6 @@ const ActionButton = ({
         </Badge>
       </Button>
       <Button variant="contained" color="secondary" onClick={handleAddOrder}>
-        เพิ่ม
-      </Button>
-      <Button variant="contained" color="secondary" onClick={handleResetForm}>
-        เคลีย
-      </Button>
-      <Button variant="contained" color="secondary" onClick={handleSubmit}>
         เสร็จ
       </Button>
     </AppBar>

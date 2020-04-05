@@ -19,10 +19,10 @@ const useStyles = makeStyles((theme: Theme) =>
         height: "46px"
       },
       "& button:first-child": {
-        background: "#2778d0"
+        background: "#383838"
       },
       "& button:nth-child(2)": {
-        background: "#975ca9"
+        background: "#d23a3a"
       },
       "& button:last-child": {
         background: "#21a08a"
@@ -40,12 +40,17 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const TopBar = ({ setOpenDialogRemark, setOpenDialogOrderList }) => {
-  const { values, setFieldValue } = useFormikContext<any>();
+const TopBar = ({ setOpenDialogOrderList }) => {
+  const { values, setFieldValue, resetForm } = useFormikContext<any>();
   const classes = useStyles();
 
   const handleAmountOrder = value => {
     setFieldValue("orderDetail.amountOrder", value);
+  };
+
+  const handleResetForm = () => {
+    resetForm();
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
@@ -59,17 +64,8 @@ const TopBar = ({ setOpenDialogRemark, setOpenDialogOrderList }) => {
           <ListAltIcon />
         </Badge>
       </Button>
-      <Button
-        variant="contained"
-        color="secondary"
-        onClick={() => setOpenDialogRemark(true)}
-      >
-        <Badge
-          badgeContent={values.orderDetail.remarks.length}
-          color="secondary"
-        >
-          หมายเหตุ
-        </Badge>
+      <Button variant="contained" color="secondary" onClick={handleResetForm}>
+        ล้าง
       </Button>
       <Button variant="contained" color="secondary">
         คิวที่ 1

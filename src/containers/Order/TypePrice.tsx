@@ -137,12 +137,11 @@ const TypePrice = () => {
       informationPrice.labelSpecial = "พิเศษ";
       informationPrice.priceSpecial = 50;
     } else if (provider === panda) {
-      informationPrice.labelNormal = "Panda ธด.";
+      informationPrice.labelNormal = "ธรรมดา";
       informationPrice.priceNormal = 50;
-      informationPrice.labelSpecial = "Panda พศ.";
+      informationPrice.labelSpecial = "พิเศษ";
       informationPrice.priceSpecial = 60;
     }
-
     if (typePrice === normalPrice) {
       setFieldValue("orderDetail.price.price", informationPrice.priceNormal);
     }

@@ -25,6 +25,7 @@ import TopBar from "containers/Order/TopBar";
 import OrderList from "containers/Order/components/OrderList/OrderList";
 import Button from "@material-ui/core/Button";
 import ComfirmDialog from "components/ConfirmDialog";
+import SendIcon from "@material-ui/icons/Send";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -82,6 +83,15 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     btnCancelOrder: {
       width: "100%"
+    },
+    btnSend: {
+      width: "100%",
+      background: "#21a08a",
+      color: "white",
+      marginTop: "10px",
+      "&.MuiButton-root:hover": {
+        background: "#21a08a"
+      }
     }
   })
 );
@@ -116,10 +126,7 @@ const Order = ({ handleSubmit }) => {
 
   return (
     <div className={classes.root}>
-      <TopBar
-        setOpenDialogRemark={setOpenDialogRemark}
-        setOpenDialogOrderList={setOpenDialogOrderList}
-      />
+      <TopBar setOpenDialogOrderList={setOpenDialogOrderList} />
       <Field name="provider">
         {({ field }) => <Provider providers={providers} {...field} />}
       </Field>
@@ -169,7 +176,7 @@ const Order = ({ handleSubmit }) => {
         openAmountOrder={openAmountOrder}
         setOpenAmountOrder={setOpenAmountOrder}
         handleAddOrder={handleAddOrder}
-        handleSubmit={handleSubmit}
+        setOpenDialogRemark={setOpenDialogRemark}
       />
       <hr />
       <ComfirmDialog
@@ -188,6 +195,14 @@ const Order = ({ handleSubmit }) => {
         className={classes.btnCancelOrder}
       >
         ยกเลิกออเดอร์
+      </Button>
+      <Button
+        variant="outlined"
+        className={classes.btnSend}
+        startIcon={<SendIcon />}
+        onClick={handleSubmit}
+      >
+        ส่ง
       </Button>
     </div>
   );

@@ -17,7 +17,7 @@ export const typeOrders = [
     default: true
   },
   {
-    name: "กินที่ร้าน",
+    name: "ทานที่ร้าน",
     default: false
   }
 ];
@@ -45,16 +45,19 @@ export const typeNoodles = [
     name: "น้ำตก"
   },
   {
-    name: "ย.หมูสับ"
+    name: "ต้มยำ"
   },
   {
-    name: "ย.น้ำตก"
+    name: "ต้มยำน้ำตก"
   }
 ];
 
 export const noodles = [
   {
-    name: "หมี่"
+    name: "เกาเหลา"
+  },
+  {
+    name: "หมี่ขาว"
   },
   {
     name: "เล็ก"
@@ -63,16 +66,13 @@ export const noodles = [
     name: "ใหญ่"
   },
   {
-    name: "บะหมี่"
+    name: "หมี่เหลือง"
   },
   {
     name: "วุ้นเส้น"
   },
   {
     name: "มาม่า"
-  },
-  {
-    name: "เกาเหลา"
   }
 ];
 

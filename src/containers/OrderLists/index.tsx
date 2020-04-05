@@ -69,6 +69,10 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const OrderLists: React.FC<any> = ({ datas }) => {
   const classes = useStyles();
+  const typeTopping = {
+    toppingPork: "หมู",
+    toppingBeef: "เนื้อ"
+  };
 
   const sortTopping = (a, b) => {
     if (a.amount > b.amount) return 1;
@@ -104,7 +108,9 @@ const OrderLists: React.FC<any> = ({ datas }) => {
                                 {/* เส้น */}
                                 <Grid item xs={12} className={classes.topSpace}>
                                   <div className={classes.text}>
-                                    {`${order.typeMenu} ${order.typeNoodle} ${order.noodle} `}
+                                    {`${order.typeMenu}${order.typeNoodle}${
+                                      typeTopping[order.typeTopping]
+                                    } ${order.noodle} `}
                                     <span className={classes.typePrice}>
                                       {order.price.typePrice}
                                     </span>
