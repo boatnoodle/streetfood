@@ -8,6 +8,11 @@ export const orderStatus = {
   DONE: "เสร็จแล้ว"
 };
 
+function play() {
+  const audio = new Audio("/sound/soundNotification.mp3");
+  audio.play();
+}
+
 const OrderManagePage: React.FC = () => {
   const [orderWait, setOrderWait] = useState([]);
   const [orderDoing, setOrderDoing] = useState([]);
@@ -76,6 +81,9 @@ const OrderManagePage: React.FC = () => {
         }
       });
   };
+  useEffect(() => {
+    play();
+  }, [orderWait]);
 
   useEffect(() => {
     if (orderDoing.length === 0) {
