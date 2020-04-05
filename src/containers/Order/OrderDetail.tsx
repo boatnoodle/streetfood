@@ -17,14 +17,14 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: "10px"
     },
     btnAddTopping: {
-      fontSize: "0.8rem",
+      fontSize: "0.6rem",
       fontWeight: "normal",
       color: "#3f51b5",
       textDecoration: "underline",
       marginRight: "10px"
     },
     btnDeleteTopping: {
-      fontSize: "0.8rem",
+      fontSize: "0.6rem",
       fontWeight: "normal",
       color: "#c51162",
       textDecoration: "underline"
@@ -32,6 +32,9 @@ const useStyles = makeStyles((theme: Theme) =>
     textToppingMore: {
       fontSize: "14px",
       color: "#c51162"
+    },
+    wrapperAddmore: {
+      lineHeight: 1
     }
   })
 );
@@ -181,7 +184,7 @@ const OrderDetail = ({ noodles, toppingPork, toppingBeef }) => {
 
   const toppingButton = (item, typeTopping) => {
     return (
-      <div>
+      <div className={classes.wrapperAddmore}>
         <a
           onClick={() => handleAddMoreTopping(item.name, typeTopping, "add")}
           className={classes.btnAddTopping}
