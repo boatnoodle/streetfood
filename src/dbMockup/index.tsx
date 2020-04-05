@@ -1,13 +1,13 @@
 export const providers = [
   {
     id: 1,
-    name: "ร้านโกเอ",
-    default: false
+    name: "PANDA",
+    default: true
   },
   {
     id: 2,
-    name: "PANDA",
-    default: true
+    name: "ร้านโกเอ",
+    default: false
   }
 ];
 

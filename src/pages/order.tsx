@@ -29,7 +29,7 @@ const OrderPage: React.FC = () => {
     queueNo: 1,
     orders: [],
     orderDetail: {
-      provider: "ร้านโกเอ",
+      provider: "PANDA",
       typeOrder: "ใส่ถุง",
       typeMenu: "ก๋วยเตี๋ยว",
       typeNoodle: "เรือ",
