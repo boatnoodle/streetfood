@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme: Theme) =>
         height: "46px"
       },
       "& button:first-child": {
-        background: "#929292"
+        background: "#8e5353"
       },
       "& button:nth-child(2)": {
         background: "#975ca9"
