@@ -1,7 +1,7 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 import { ApolloProvider } from "@apollo/react-hooks";
-import { Firebase, FirebaseContext } from "components/Firebase/";
+import { Firebase, FirebaseContext } from "components/Firebase";
 
 import client from "./client";
 import OrderPage from "pages/order";

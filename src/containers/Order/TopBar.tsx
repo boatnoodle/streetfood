@@ -5,6 +5,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Badge from "@material-ui/core/Badge";
 import { useFormikContext } from "formik";
 import ListAltIcon from "@material-ui/icons/ListAlt";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -68,7 +69,11 @@ const TopBar = ({ setOpenDialogOrderList }) => {
         ล้าง
       </Button>
       <Button variant="contained" color="secondary">
-        คิวที่ 1
+        {values.queueNo ? (
+          `คิวที่ ${values.queueNo}`
+        ) : (
+          <CircularProgress size={30} />
+        )}
       </Button>
     </AppBar>
   );

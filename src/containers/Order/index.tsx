@@ -95,7 +95,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }
   })
 );
-const Order = ({ handleSubmit }) => {
+const Order = ({ handleSubmit, orderLatest }) => {
   const [openAmountOrder, setOpenAmountOrder] = useState(false);
   const [openDialogRemark, setOpenDialogRemark] = useState(false);
   const [openDialogOrderList, setOpenDialogOrderList] = useState(false);
@@ -123,6 +123,29 @@ const Order = ({ handleSubmit }) => {
   const toggleDialog = () => {
     setOpenConfirmDialog(!openConfirmDialog);
   };
+
+  const getQueueNo = () => {
+    let queueNo;
+    if (orderLatest === null) return false;
+    if (orderLatest) {
+      //get queue number and + 1
+      queueNo = orderLatest.queueNo + 1;
+      setFieldValue("queueNo", queueNo);
+    } else {
+      //first queue of the day
+      setFieldValue("queueNo", 1);
+    }
+  };
+
+  useEffect(() => {
+    if (!values.queueNo) {
+      getQueueNo();
+    }
+  }, [values.queueNo]);
+
+  useEffect(() => {
+    getQueueNo();
+  }, [orderLatest]);
 
   return (
     <div className={classes.root}>

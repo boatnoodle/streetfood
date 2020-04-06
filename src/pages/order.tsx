@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useFirebase } from "components/Firebase/useFirebase";
 import { Formik } from "formik";
 import Order from "containers/Order";
@@ -9,6 +9,7 @@ import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import firebaseGlobal from "firebase";
+import { getLatestOrderToday } from "services/firebase";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -21,12 +22,13 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const OrderPage: React.FC = () => {
   const classes = useStyles();
-  const [openSnackBar, setOpenSnackBar] = React.useState(false);
-  const [openBackDrop, setOpenBackDrop] = React.useState(false);
+  const [orderLatest, setOrderLatest] = useState(null);
+  const [openSnackBar, setOpenSnackBar] = useState(false);
+  const [openBackDrop, setOpenBackDrop] = useState(false);
   const firebase = useFirebase();
   const initialValues = {
     tableNo: null,
-    queueNo: 1,
+    queueNo: null,
     orders: [],
     provider: "PANDA",
     orderStatus: "รอ",
@@ -55,6 +57,7 @@ const OrderPage: React.FC = () => {
       .then(function() {
         setOpenBackDrop(false);
         setOpenSnackBar(true);
+        getLatestOrderToday(setOrderLatest);
         window.scrollTo({ top: 0, behavior: "smooth" });
       })
       .catch(function(error) {
@@ -91,6 +94,10 @@ const OrderPage: React.FC = () => {
     setOpenSnackBar(false);
   };
 
+  useEffect(() => {
+    getLatestOrderToday(setOrderLatest);
+  }, []);
+
   return (
     <>
       <Backdrop
@@ -124,7 +131,9 @@ const OrderPage: React.FC = () => {
         onSubmit={handleSubmit}
       >
         {({ handleSubmit }) => {
-          return <Order handleSubmit={handleSubmit} />;
+          return (
+            <Order handleSubmit={handleSubmit} orderLatest={orderLatest} />
+          );
         }}
       </Formik>
     </>

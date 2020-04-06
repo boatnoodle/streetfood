@@ -5,17 +5,31 @@ import "firebase/storage";
 import "firebase/firestore";
 // import "components/Firebase/auth";
 // import "components/Firebase/firestore";
-
-const config = {
-  apiKey: "AIzaSyBM5T-wuLpxNUZPkv86-MLJjo4BZaK268g",
-  authDomain: "streetfood-a95cc.firebaseapp.com",
-  databaseURL: "https://streetfood-a95cc.firebaseio.com",
-  projectId: "streetfood-a95cc",
-  storageBucket: "streetfood-a95cc.appspot.com",
-  messagingSenderId: "763952527520",
-  appId: "1:763952527520:web:2a81788f614827300a71c5",
-  measurementId: "G-5N7Y0CKHPY"
-};
+let config;
+const isDevelop = process.env.NODE_ENV === "development" ? true : false;
+if (isDevelop) {
+  config = {
+    apiKey: "AIzaSyAKlm0mfA-9MXjO7mvl9w8_unTtNlsQWZA",
+    authDomain: "streetfood-dev.firebaseapp.com",
+    databaseURL: "https://streetfood-dev.firebaseio.com",
+    projectId: "streetfood-dev",
+    storageBucket: "streetfood-dev.appspot.com",
+    messagingSenderId: "1029097500664",
+    appId: "1:1029097500664:web:91584cd345b4584dcfb00d",
+    measurementId: "G-FGVJYC9LLK"
+  };
+} else {
+  config = {
+    apiKey: "AIzaSyBM5T-wuLpxNUZPkv86-MLJjo4BZaK268g",
+    authDomain: "streetfood-a95cc.firebaseapp.com",
+    databaseURL: "https://streetfood-a95cc.firebaseio.com",
+    projectId: "streetfood-a95cc",
+    storageBucket: "streetfood-a95cc.appspot.com",
+    messagingSenderId: "763952527520",
+    appId: "1:763952527520:web:2a81788f614827300a71c5",
+    measurementId: "G-5N7Y0CKHPY"
+  };
+}
 
 class Firebase {
   // auth: firebase.auth.Auth;
