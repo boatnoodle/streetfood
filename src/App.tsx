@@ -13,10 +13,11 @@ import LayoutWithoutHeading from "components/Layout/withOutHeading";
 import GlobalStyle from "global-styles";
 
 const PublicRoute = ({ component: Component, ...rest }) => {
+  console.log("wanna test bot");
   return (
     <Route
       {...rest}
-      render={props =>
+      render={(props) =>
         rest.useLayout ? (
           <LayoutWithoutHeading>
             <Component {...props} />
